@@ -9,18 +9,18 @@ class Livro {
     private $publicacao;
     private $novidade;
 
-    function __construct($xmlBook) {
-        $xml = new DOMDocument();
-        $xml->load($xmlBook);
-
-        $this->titulo = $xml->getElementsByTagName('title');
-        $this->autor = $xml->getElementsByTagName('author');
-        $this->categoria = $xml->getElementsByTagName('category');
-        $this->isbn = $xml->getElementsByTagName('isbn');
-        if ($xml->getElementsByTagName('news') == 'sim')
+    function __construct($xml) {
+        
+        $this->titulo = $xml->title;   
+        $this->autor = $xml->author;
+        $this->categoria = $xml->category;
+        $this->isbn = $xml->isbn;
+        $this->publicacao = $xml->publicacao;
+        if ($xml->news == 'sim'){
             $this->novidade = true;
-        else
+        }else{
             $this->novidade = false;
+        }
     }
 
     function __destruct() {
