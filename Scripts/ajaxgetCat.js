@@ -15,7 +15,7 @@ function CreateXmlHttpRequestObject( )
     return xmlHttpObj;
 }
 
-function MakeXMLHTTPCall()
+function MakeXMLHTTPCallCategorias()
 {
     alert("Chegou ao Make");
     xmlHttpObj = CreateXmlHttpRequestObject();

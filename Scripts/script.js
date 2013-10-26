@@ -1,3 +1,7 @@
+function init(){
+    MakeXMLHTTPCallCategorias();
+}
+
 function loadCategorias(){
 	//alert("Carreguei Categorias!!!!");
 }
