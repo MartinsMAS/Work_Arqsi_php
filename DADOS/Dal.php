@@ -29,7 +29,15 @@ class Dal {
                 }
             }
         }
-        return $vetCategorias;
+        /* Reconstrução do XML a retornar */
+        $xmlReturn = new DOMDocument();
+        $newnode = $xmlReturn->createElement('categorias');
+        $xmlReturn->appendChild($newnode);
+        foreach($vetCategorias AS $categoria){
+            $newnd = $xmlReturn->createElement('categoria', $categoria);
+            $newnode->appendChild($newnd);
+        }
+        return $xmlReturn;
     }
 
     /* Metodo que retorna todas as categorias de uma editora TESTADO */
