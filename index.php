@@ -24,6 +24,11 @@
 			<!--<select size="1" name="sFreguesias" id="sFreguesias" onChange=alerta(); >
 			</select>-->	
 			
+			To Have this Widget in your page
+			<br>
+			<input type="url">"<option value="Viana">Viana do Castelo</option>"</input>
+			&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;//www.youtube.com/embed/bpOSxM0rNPM&#34; frameborder=&#34;0&#34; allowfullscreen &gt;
+&lt;/iframe&gt;
 			
 			<br><br><br><br>
 			<a href=""><img src="img/question.jpg" width="25" height="25" /></a>
