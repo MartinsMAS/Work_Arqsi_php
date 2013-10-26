@@ -1,30 +1,28 @@
 function loadCategorias(){
-	alert("Carreguei Categorias!!!!");
+	//alert("Carreguei Categorias!!!!");
 }
 			
 function loadLivros(){
-	alert("Carreguei Livros!!!!");
 	
 	var ret = createTableBook();
-	alert("Carreguei Livros2222!!!!");
 	elementDiv = document.getElementById("meteraquitabela");
-	elementDiv.innerHTML=ret;	
+	elementDiv.innerHTML=ret;
 }
 
 function createTableBook(){
 	
 	var retorno = "";
-	
+	for(i=0;i<10;i++){
 	retorno += "<table class=\"tabelaLivros\">";
 	retorno += "<tr>";
-	retorno += "<td class=\"imagemTabelaLivros\"><img class=\"imagemCapaLivroTabelaLivros\" src=\"img/logo.jpg\"  /></td>";
-	retorno += "<td class=\"tituloTabelaLivros\">Titulo do Livro</td>";
+	retorno += "<td class=\"imagemTabelaLivros\" id=\"imagemTabelaLivros\" rowspan=\"3\"><span><img class=\"imagemCapaLivroTabelaLivros\" src=\"img/logo.jpg\"  /></span></td>";
+	retorno += "<td class=\"tituloTabelaLivros\" id=\"tituloTabelaLivros\" colspan=\"2\"><span>Titulo do Livro</span></td>";
 	retorno += "</tr><tr>";
-	retorno += "<td class=\"categoriasTabelaLivros\"><b>Categoria:</b> Romance</td>";
-	retorno += "<td class=\"autorTabelaLivros\"><b>Autor:</b> Fernando Pessoa</td>";
+	retorno += "<td class=\"categoriasTabelaLivros\" id=\"categoriasTabelaLivros\"><span><b>Categoria:</b> Romance</span></td>";
+	retorno += "<td class=\"autorTabelaLivros\" id=\"autorTabelaLivros\"><b>Autor:</b> Fernando Pessoa</td>";
 	retorno += "</tr><tr>";
-	retorno += "<td class=\"mensagemTabelaLivros\">Para mais info, carregue na capa do livro</td>";
+	retorno += "<td class=\"mensagemTabelaLivros\" id=\"mensagemTabelaLivros\" colspan=\"2\">Para mais info, carregue na capa do livro</td>";
 	retorno += "</tr></table>";
-
+	}
 	return retorno;
 }
