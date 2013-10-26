@@ -9,18 +9,22 @@ class Livro {
     private $publicacao;
     private $novidade;
 
-    function __construct($xml) {
+    function __construct($srtXml) {
+        $xmlDom = new DOMDocument();
+        $xmlDom->loadXML($srtXml);
         
-        $this->titulo = $xml->title;   
-        $this->autor = $xml->author;
-        $this->categoria = $xml->category;
-        $this->isbn = $xml->isbn;
-        $this->publicacao = $xml->publicacao;
-        if ($xml->news == 'sim'){
+        $this->titulo = $xmlDom->getElementsByTagName('title')->item(0)->nodeValue;
+        $this->autor = $xmlDom->getElementsByTagName('author')->item(0)->nodeValue;
+        $this->categoria = $xmlDom->getElementsByTagName('category')->item(0)->nodeValue;
+        $this->isbn = $xmlDom->getElementsByTagName('isbn')->item(0)->nodeValue;
+        $this->publicacao = $xmlDom->getElementsByTagName('publicacao')->item(0)->nodeValue;
+        $nov = $xmlDom->getElementsByTagName('news')->item(0)->nodeValue;
+        if ($nov == 'sim'){
             $this->novidade = true;
         }else{
             $this->novidade = false;
         }
+        
     }
 
     function __destruct() {

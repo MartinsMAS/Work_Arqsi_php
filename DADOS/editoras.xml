@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<editoras>
+    <editora>
+        <nome>Editora 1</nome>
+        <link>phpdev2.dei.isep.ipp.pt/~arqsi/trabalho1/editora1.php</link>
+    </editora>
+    <editora>
+        <nome>Editora 2</nome>
+        <link>phpdev2.dei.isep.ipp.pt/~arqsi/trabalho1/editora2.php</link>
+    </editora>
+</editoras>    
+
