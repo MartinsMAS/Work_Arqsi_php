@@ -1,0 +1,43 @@
+table.tabelaLivros{
+width="400";
+height="80";
+border="0";
+cellspacing="3";
+}
+
+td.tituloTabelaLivros{
+height="27";
+colspan="2";
+align="center";
+valign="middle";
+style="font-family: Verdana, Geneva, sans-serif; font-size: 14px; color: #00F; font-weight: bold; text-align: center;"; 
+}
+
+td.imagemTabelaLivros{
+width="51";
+rowspan="3";
+}
+
+img.imagemCapaLivroTabelaLivros{
+width="50";
+height="50";
+}
+
+td.categoriasTabelaLivros{
+width="135";
+height="24";
+style="font-family: Verdana, Geneva, sans-serif; font-size: 10px;";
+}
+
+td.autorTabelaLivros{
+width="170";
+style="text-align: right; font-family: Verdana, Geneva, sans-serif; font-size: 10px;";
+}
+
+td.mensagemTabelaLivros{
+height="14";
+colspan="2";
+align="center";
+valign="bottom";
+style="font-family: 'Courier New', Courier, monospace; font-size: 9px; text-align: center;";
+}

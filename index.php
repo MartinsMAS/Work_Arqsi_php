@@ -6,7 +6,7 @@
         <title>Book Info</title>
 		
 		<script type="text/javascript" src="Scripts/script.js"></script>
-		
+		<link rel="stylesheet" type="text/css" href="CSS/widget.css" />
     </head>
     <body onload=loadCategorias()>
 		<h2 class="titulo"><img src="img/logo.jpg" width="50" height="50" /> Book Info</h2>
@@ -45,6 +45,10 @@
 			</table>
 			
 			<br><br><br><br>
+			
+			<div id="meteraquitabela">
+			
+			</div>
 			
 			<a href=""><img src="img/question.jpg" width="25" height="25" /></a>
 		</form>
