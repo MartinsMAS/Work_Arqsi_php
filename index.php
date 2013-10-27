@@ -6,6 +6,7 @@
         <title>Book Info</title>
 		<script type="text/javascript" src="Scripts/script.js"></script>
                 <script type="text/javascript" src="Scripts/ajaxgetCat.js"></script>
+                <script type="text/javascript" src="Scripts/ajaxgetLivro.js"></script>
                 <link rel="stylesheet" type="text/css" href="CSS/widget.css" />
     </head>
     <body onload=init();>

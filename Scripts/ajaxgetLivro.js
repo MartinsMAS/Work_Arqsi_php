@@ -15,14 +15,15 @@ function CreateXmlHttpRequestObject( )
     return xmlHttpObj;
 }
 
-function MakeXMLHTTPCallCategorias()
+function MakeXMLHTTPCallLivro(titulo)
 {
     xmlHttpObj = CreateXmlHttpRequestObject();
 
     if (xmlHttpObj)
     {
         // Definição do URL para efectuar pedido HTTP - método GET
-        xmlHttpObj.open("GET", "AJAX/PedidosHTTP.php?idPedido=1", true);
+        var url = "AJAX/PedidosHTTP.php?idPedido=2&titulo=" + titulo;
+        xmlHttpObj.open("GET", url, true);
 
         // Registo do EventHandler
         xmlHttpObj.onreadystatechange = stateHandler;
@@ -34,26 +35,14 @@ function stateHandler()
 {
     if (xmlHttpObj.readyState == 4 && xmlHttpObj.status == 200)
     {
-        var text = xmlHttpObj.responseText;
-        //preencheSelectCategorias(xml);
-        preencheSelectCategorias(text)
+        var xml = xmlHttpObj.responseXML;
+        
+        alert();
     }
 }
 
-function preencheSelectCategorias(text)
+function carregaLivro(text)
 {
-    var selectCategoria = document.getElementById("categorias");
-    selectCategoria.innerHTML = "";
-    var vetCat = text.split(',');
-    for (var i = 0; i < vetCat.length; i++) {
-        nodeoption = document.createElement("option");
-        /*Atributo*/
-        nodeoption.value = vetCat[i];
-        nodeoption.text = vetCat[i];
-
-        selectCategoria.appendChild(nodeoption);
-    }
+   
 }
-
-
 

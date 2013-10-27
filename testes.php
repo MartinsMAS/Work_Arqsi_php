@@ -30,8 +30,13 @@ and open the template in the editor.
         
         $dal = new Dal();
         
-        $dal->getTodasCategorias();
-  
+       /* $dal->getTodasCategorias();*/
+        
+        
+        //$dal->getDadosLivro("Mancha%20Humana");
+        
+        $dal->getDadosNLivros(6);
+        
         ?>
     </body>
 </html>
