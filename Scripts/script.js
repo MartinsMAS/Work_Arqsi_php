@@ -7,9 +7,16 @@ function loadCategorias(){
 }
 
 function inicializar(){
-	loadLivros();
-	createCategorias();
-
+	var selectEscolha = document.getElementById("comboSelect");
+	//var valorSelect = selectEscolha.options[selectEscolha.selectedIndex].text;
+	
+	if(selectEscolha.selectedIndex == '1'){
+		createEditora();
+		//loadLivros();
+	}else if(selectEscolha.selectedIndex == '2'){
+		createCategorias();
+		//loadLivros();
+	}
 }
 			
 function loadLivros(){
@@ -21,6 +28,8 @@ function loadLivros(){
 
 function createCategorias(){
 	var write = "";
+	
+	write += "<div id=\"formChosses\" class=\"formChosses\">";			
 	
 	write += "<form method=\"get\" action=\"*\">";
 	write += "<table class=\"tabelaCategorias\">";
@@ -39,8 +48,35 @@ function createCategorias(){
 	write += "<option value=\"10\">10</option>";
 	write += "<option value=\"25\">25</option>";
 	write += "</select></td></tr></table></form>";
+	
+	write += "</div>";
 			
-	elementDiv = document.getElementById("formChosses");
+	elementDiv = document.getElementById("secondMenu");
+	elementDiv.innerHTML=write;		
+}
+
+function createEditora(){
+	var write = "";
+	
+	write += "<div id=\"formChosses\" class=\"formChosses\">";
+	
+	write += "<form method=\"get\" action=\"*\">";
+	write += "<table class=\"tabelaCategorias\">";
+	write += "<tr>";
+	write += "<td class=\"categorias\" id=\"categorias\">Categorias: ";
+	write += "<select size=\"1\" name=\"comboEditoras\" id=\"comboEditoras\" onChange=loadLivros();>";
+	write += "<option selected=\"selected\" value=\"editoras\">editoras</option>";
+	write += "<option value=\"editoras\">editoras</option>";
+	write += "<option value=\"editoras\">editoras</option>";
+	write += "<option value=\"editoras\">editoras</option>";
+	write += "</select></td>";
+	write += "<td class=\"showNResults\" id=\"showNResults\">Por página:";
+	write += "<input name=\"textSize\" id=\"textSize\" size=\"5\" type=\"text\" onChange=loadLivros(); />";
+	write += "</td></tr></table></form>";
+	
+	write += "</div>";
+			
+	elementDiv = document.getElementById("secondMenu");
 	elementDiv.innerHTML=write;		
 }
 

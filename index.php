@@ -8,7 +8,7 @@
                 <script type="text/javascript" src="Scripts/ajaxgetCat.js"></script>
                 <link rel="stylesheet" type="text/css" href="CSS/widget.css" />
     </head>
-    <body onload=loadLivros();>
+    <body onload=inicializar();>
 		<div id="top" class="top">
 			<div id="tituloWidget" class="tituloWidget">
 				<h2 class="titulo"><img class="logotipo" src="img/logo.png" /> Book Info</h2>
@@ -19,7 +19,7 @@
 					<table class="tabelaCategorias">
 					<tr>
 					<td class="categorias" id="metodoEscolha">Método de Seleção: 
-						<select size="1" name="comboCategorias" id="comboCategorias" onChange=loadLivros();>
+						<select size="1" name="comboSelect" id="comboSelect" onChange=inicializar();>
 							<option selected="selected" value="none">------</option>
 							<option value="editora">Editora</option>
 							<option value="categoria">Categoria</option>
@@ -30,31 +30,8 @@
 				</form>
 			</div>
 			
+			<div id="secondMenu" class="secondMenu">
 			
-			
-			<div id="formChosses" class="formChosses">
-				<form method="get" action="*">
-					<table class="tabelaCategorias">
-					<tr>
-					<td class="categorias" id="categorias">Categorias: 
-						<select size="1" name="comboCategorias" id="comboCategorias" onChange=loadLivros();>
-							<option selected="selected" value="Porto">Porto</option>
-							<option value="Lisboa">Lisboa</option>
-							<option value="Braga">Braga</option>
-							<option value="Viana">Viana do Castelo</option>
-						</select>
-					</td>
-					<td class="showNResults" id="showNResults">Ver Apenas:
-						<select size="1" name="comboShowNResults" id="comboShowNResults" onChange=loadLivros();>
-							<option selected="selected" value="none">--</option>
-							<option value="5">5</option>
-							<option value="10">10</option>
-							<option value="25">25</option>
-						</select>
-					</td>
-					</tr>
-					</table>					
-				</form>
 			</div>
 		</div>
 		
