@@ -26,7 +26,7 @@ and open the template in the editor.
         
         
    
-        include './DADOS/Dal.php';
+        include 'DADOS/Dal.php';
         
         $dal = new Dal();
         

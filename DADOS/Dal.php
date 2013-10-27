@@ -73,12 +73,23 @@ class Dal {
             $elem->setAttribute("name", $editora->getNome());
             $editorasElem->appendChild($elem);
 
+            $loadXml = new DOMDocument('1.0', 'ISO-8859-1');
             $link = $editora->getLink() . "?numero=$n";
-            $dadosEditora = $livros->load($link);
-            $elem->appendChild($dadosEditora);
+            $load = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+            $load = $load . file_get_contents($link);
+             
+            $loadXml->loadXML($load); // CARREGA VAZIO
+            $tagBook = $loadXml->getElementsByTagName("book");
+            foreach ($tagBook AS $book) {
+                $childsBook = $book->childNodes;
+                foreach ($childsBook AS $child) {
+                    $tagName = $child->nodeName;
+                }
+            }
         }
         $temp = $livros->saveXML();
-        //echo $livros->saveXML();
+        echo '';
+//echo $livros->saveXML();
     }
 
     /* Metodo que retorna todas as categorias de uma editora TESTADO */
@@ -100,8 +111,8 @@ class Dal {
 
     private function carregaEditoras() {
         $this->editoras = array();
-        include '../MODELO/Editora.php';
-        $fxml = '../DADOS/editoras.xml';
+        include 'MODELO/Editora.php';
+        $fxml = 'DADOS/editoras.xml';
         if (file_exists($fxml)) {
             $xmlProp = new DOMDocument();
             $xmlProp->load($fxml);
@@ -115,8 +126,7 @@ class Dal {
             $obj;
             $this->editoras[] = new Editora($nome, $link);
         }
-
-   }
+    }
 
 }
 
