@@ -1,4 +1,4 @@
-var xmlHttpObj = null;
+﻿var xmlHttpObj = null;
 
 function CreateXmlHttpRequestObject( )
 {
@@ -17,7 +17,7 @@ function CreateXmlHttpRequestObject( )
 
 function MakeXMLHTTPCallCategorias()
 {
-    alert("Chegou ao Make");
+    //alert("Chegou ao Make");
     xmlHttpObj = CreateXmlHttpRequestObject();
 
     if (xmlHttpObj)
