@@ -1,4 +1,81 @@
+		.top{
+			width: 450px;
+			height: 170px;
+			background-image:url(sections/top.png);
+		}
+		
+		.resultadoPesquisa{
+			width: 450px;
+			height: 120px;
+			background-image:url(sections/mid.png);
+			text-align: center;
+		}
+		
+		.bottom{
+			width: 450px;
+			height: 40px;
+			background-image:url(sections/bottom.png);
+		}
+		
+		.tituloWidget{
+			align: center;
+			position: relative;
+			top: 15px;
+		}
+		
+		.titulo{
+			font-family: Verdana, Geneva, sans-serif; 
+			font-size: 20px; 
+			color: #000000; 
+			text-align: center;
+		}
+		
+		.logotipo{
+			width: 25px ;
+			height: 25px ;
+		}
+		
+		.formChosses{
+			position: relative;
+			top: 10px;
+			width: 450px;
+			height: 50px;
+			background-image:url(sections/categorias.png);
+		}
+		
+		.tabelaCategorias{
+			position: relative;
+			top: 10px;
+			left: 20px;
+			right: 20px;
+			bottom: 10px;
+		}
+		
+		.categorias{
+			width: 220px;
+			text-align: left;			
+		}
+		
+		.showNResults{
+			width: 150px;
+			text-align: right;
+		}
+		
+		.tabelaLivroDiv{
+			width: 450px;
+			height: 120px;
+			background-image:url(sections/newSection.png);
+		}
+		
+		.paging{
+		
+		}
+			
+		
 		.tabelaLivros{
+			position: relative;
+			top: 15px;
+			left: 25px;
 			width: 400px;
 			height: 80px;
 			border: 2px;
@@ -13,11 +90,12 @@
 			font-size: 14px; 
 			color: #00F; 
 			font-weight: bold; 
-			text-align: center;; 
+			text-align: center;
 		}
 
 		.imagemTabelaLivros{
-			width: 51px;
+			text-align: right; 
+			width: 61px;
 		}
 
 		.imagemCapaLivroTabelaLivros{
@@ -26,7 +104,7 @@
 		}
 
 		.categoriasTabelaLivros{
-			width: 135px;
+			width: 125px;
 			height: 24px;
 			font-family: Verdana, Geneva, sans-serif;
 			font-size: 10px;
@@ -48,7 +126,7 @@
 			text-align: center;
 		}	
 
-		.rodape{
+		.help{
 			width: 450px;
 			text-align: right;
 			valign: bottom;
