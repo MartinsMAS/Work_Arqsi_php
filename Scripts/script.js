@@ -1,5 +1,5 @@
 function init(){
-    MakeXMLHTTPCallCategorias();
+    MakeXMLHTTPCallNLivros(6);
 }
 
 function loadCategorias(){

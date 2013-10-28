@@ -191,6 +191,7 @@
 	</script>
 		
 		<script type="text/javascript" src="Scripts/script.js"></script>
+<<<<<<< HEAD
         <script type="text/javascript" src="Scripts/ajaxgetCat.js"></script>
         <link rel="stylesheet" type="text/css" href="CSS/widget.css" />
 				
@@ -205,8 +206,15 @@
 			}
 		</style>
 		
+=======
+                <script type="text/javascript" src="Scripts/ajaxgetCat.js"></script>
+                <script type="text/javascript" src="Scripts/ajaxgetLivro.js"></script>
+                <script type="text/javascript" src="Scripts/ajaxgetNLivros.js"></script>
+                
+                <link rel="stylesheet" type="text/css" href="CSS/widget.css" />
+>>>>>>> 00b7e47c8793568083620f8ea2c8baecf3fe1dfd
     </head>
-    <body onload=inicializar();>
+    <body onload=init();>
 		<div id="top" class="top">
 			<div id="tituloWidget" class="tituloWidget">
 				<h2 class="titulo"><img class="logotipo" src="img/logo.png" /> Book Info</h2>
