@@ -15,6 +15,7 @@ function inicializar(){
 		//loadLivros();
 	}else if(selectEscolha.selectedIndex == '2'){
 		createCategorias();
+		MakeXMLHTTPCallCategorias();
 		//loadLivros();
 	}
 }
@@ -27,32 +28,80 @@ function loadLivros(){
 }
 
 function createCategorias(){
-	var write = "";
+		t  = document.createElement("table");  
+        tb = document.createElement("tbody");
+		tr = document.createElement("tr"); 
+		td1 = document.createElement("td");
+		td2 = document.createElement("td2");
+		text1 = document.createTextNode("Categorias: ");
+		select1 = document.createElement("select");
+		text2 = document.createTextNode("Ver Apenas: ");
+		select2 = document.createElement("select");
+		div = document.createElement("div");
+		optionS = document.createElement("option");
+		option1 = document.createElement("option");
+		option2 = document.createElement("option");
+		option3 = document.createElement("option");
+		optionTextS = document.createTextNode("--");
+		optionText1 = document.createTextNode("5");
+		optionText2 = document.createTextNode("10");
+		optionText3 = document.createTextNode("25");
+
+	div.setAttribute("id","formChosses");
+	div.setAttribute("class","formChosses");
 	
-	write += "<div id=\"formChosses\" class=\"formChosses\">";			
+	t.setAttribute("class","tabelaCategorias");
 	
-	write += "<form method=\"get\" action=\"*\">";
-	write += "<table class=\"tabelaCategorias\">";
-	write += "<tr>";
-	write += "<td class=\"categorias\" id=\"categorias\">Categorias: ";
-	write += "<select size=\"1\" name=\"comboCategorias\" id=\"comboCategorias\" onChange=loadLivros();>";
-	write += "<option selected=\"selected\" value=\"categorias\">categorias</option>";
-	write += "<option value=\"categorias\">categorias</option>";
-	write += "<option value=\"categorias\">categorias</option>";
-	write += "<option value=\"categorias\">categorias</option>";
-	write += "</select></td>";
-	write += "<td class=\"showNResults\" id=\"showNResults\">Ver Apenas:";
-	write += "<select size=\"1\" name=\"comboShowNResults\" id=\"comboShowNResults\" onChange=loadLivros();>";
-	write += "<option selected=\"selected\" value=\"none\">--</option>";
-	write += "<option value=\"5\">5</option>";
-	write += "<option value=\"10\">10</option>";
-	write += "<option value=\"25\">25</option>";
-	write += "</select></td></tr></table></form>";
+	td1.setAttribute("id","categorias");
+	td1.setAttribute("class","categorias");
 	
-	write += "</div>";
-			
+	select1.setAttribute("id","comboCategorias");
+	select1.setAttribute("class","comboCategorias");
+	select1.setAttribute("size","1");
+	select1.setAttribute("onChange","loadLivros();");
+	
+	td2.setAttribute("id","showNResults");
+	td2.setAttribute("class","showNResults");
+
+	select2.setAttribute("id","comboShowNResults");
+	select2.setAttribute("class","comboShowNResults");
+	select2.setAttribute("size","1");
+	select2.setAttribute("onChange","loadLivros();");
+	
+	optionS.setAttribute("selected","selected");
+	optionS.setAttribute("value","none");
+	option1.setAttribute("value","5");
+	option2.setAttribute("value","10");
+	option3.setAttribute("value","25");
+	
+	
+	
+	option1.appendChild(optionText1);
+	option2.appendChild(optionText2);
+	option3.appendChild(optionText3);
+	optionS.appendChild(optionTextS);
+	
+	
+	select2.appendChild(optionS);
+	select2.appendChild(option1);
+	select2.appendChild(option2);
+	select2.appendChild(option3);
+	
+	td1.appendChild(text1);
+	td1.appendChild(select1);
+	td2.appendChild(text2);
+	td2.appendChild(select2);
+	
+	tr.appendChild(td1);
+	tr.appendChild(td2);
+	
+	tb.appendChild(tr);
+
+	t.appendChild(tb);
+	div.appendChild(t);
+	
 	elementDiv = document.getElementById("secondMenu");
-	elementDiv.innerHTML=write;		
+	elementDiv.appendChild(div);
 }
 
 function createEditora(){
