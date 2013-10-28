@@ -63,24 +63,6 @@ class Dal {
         if (!$this->editoras) {
             $this->carregaEditoras();
         }
-        /*
-          $livros = "<?xml version=\"1.0\"?><editoras>";
-          foreach ($this->editoras AS $editora){
-          $nomeEditora = $editora->getNome();
-          $livros = $livros . "<editora name=" . $nomeEditora . ">";
-
-          $link = $editora->getLink() . "?numero=$n";
-          $resEditora = file_get_contents($link);
-          $livros = $livros . $resEditora;
-
-          $livros = $livros . "</editora>";
-          }
-
-          $livros = $livros . "</editoras>";
-
-          return $livros;
-         */
-
         $livros = new DOMDocument();
         $editorasElem = $livros->createElement("editoras");
         $livros->appendChild($editorasElem);
