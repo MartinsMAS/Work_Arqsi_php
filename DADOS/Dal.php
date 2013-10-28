@@ -63,27 +63,86 @@ class Dal {
         if (!$this->editoras) {
             $this->carregaEditoras();
         }
+        /*
+          $livros = "<?xml version=\"1.0\"?><editoras>";
+          foreach ($this->editoras AS $editora){
+          $nomeEditora = $editora->getNome();
+          $livros = $livros . "<editora name=" . $nomeEditora . ">";
+
+          $link = $editora->getLink() . "?numero=$n";
+          $resEditora = file_get_contents($link);
+          $livros = $livros . $resEditora;
+
+          $livros = $livros . "</editora>";
+          }
+
+          $livros = $livros . "</editoras>";
+
+          return $livros;
+         */
 
         $livros = new DOMDocument();
         $editorasElem = $livros->createElement("editoras");
         $livros->appendChild($editorasElem);
+
         foreach ($this->editoras AS $editora) {
+            // Colocação da tag editora com o seu nome 
+            $newTagEditora = $livros->createElement("editora");
+            $newTagEditora->setAttribute("name", $editora->getNome());
+            $editorasElem->appendChild($newTagEditora);
 
-            $elem = $livros->createElement("editora");
-            $elem->setAttribute("name", $editora->getNome());
-            $editorasElem->appendChild($elem);
-
-            $loadXml = new DOMDocument('1.0', 'ISO-8859-1');
             $link = $editora->getLink() . "?numero=$n";
-            $load = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
             $load = $load . file_get_contents($link);
-             
-            $loadXml->loadXML($load); // CARREGA VAZIO
-            $tagBook = $loadXml->getElementsByTagName("book");
+            $loadHTML = new DOMDocument();
+            $loadHTML->loadHTML($load);
+            $tagBook = $loadHTML->getElementsByTagName("book");
             foreach ($tagBook AS $book) {
+                
+                // criar a nova tag book e inserir dentro da editora
+                $newTagBook = $livros->createElement("book");
+                $newTagEditora->appendChild($newTagBook);
+                
                 $childsBook = $book->childNodes;
                 foreach ($childsBook AS $child) {
                     $tagName = $child->nodeName;
+                    switch ($tagName) {
+                        case 'title':
+                            $node = $livros->createElement("title");
+                            $nodeText = $livros->createTextNode($child->nodeValue);
+                            $node->appendChild($nodeText);
+                            $newTagBook->appendChild($node);
+                            break;
+                        case 'author':
+                            $node = $livros->createElement("author");
+                            $nodeText = $livros->createTextNode($child->nodeValue);
+                            $node->appendChild($nodeText);
+                            $newTagBook->appendChild($node);
+                            break;
+                        case 'category':
+                            $node = $livros->createElement("category");
+                            $nodeText = $livros->createTextNode($child->nodeValue);
+                            $node->appendChild($nodeText);
+                            $newTagBook->appendChild($node);
+                            break;
+                        case 'isbn':
+                            $node = $livros->createElement("isbn");
+                            $nodeText = $livros->createTextNode($child->nodeValue);
+                            $node->appendChild($nodeText);
+                            $newTagBook->appendChild($node);
+                            break;
+                        case 'publicacao':
+                            $node = $livros->createElement("publicacao");
+                            $nodeText = $livros->createTextNode($child->nodeValue);
+                            $node->appendChild($nodeText);
+                            $newTagBook->appendChild($node);
+                            break;
+                        case 'news':
+                            $node = $livros->createElement("news");
+                            $nodeText = $livros->createTextNode($child->nodeValue);
+                            $node->appendChild($nodeText);
+                            $newTagBook->appendChild($node);
+                            break;
+                    }
                 }
             }
         }

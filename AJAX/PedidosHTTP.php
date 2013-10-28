@@ -21,6 +21,9 @@ function analisarPedido() {
         case 2:
             getDadosLivro();
             break;
+        case 3:
+            getDadosNLivros();
+            break;
         default:
             echo RETURN_DEFAULT;
     }
@@ -52,6 +55,15 @@ function getDadosLivro() {
             echo RETURN_DEFAULT;
         }
     } else {
+        echo RETURN_DEFAULT;
+    }
+}
+
+function getDadosNLivros(){
+    $dal = new Dal();
+    if(isset($_GET['numero'])){
+        return $dal->getDadosNLivros($_GET['numero']);
+    }else{
         echo RETURN_DEFAULT;
     }
 }

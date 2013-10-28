@@ -6,9 +6,12 @@
         <title>Book Info</title>
 		<script type="text/javascript" src="Scripts/script.js"></script>
                 <script type="text/javascript" src="Scripts/ajaxgetCat.js"></script>
+                <script type="text/javascript" src="Scripts/ajaxgetLivro.js"></script>
+                <script type="text/javascript" src="Scripts/ajaxgetNLivros.js"></script>
+                
                 <link rel="stylesheet" type="text/css" href="CSS/widget.css" />
     </head>
-    <body onload=inicializar();>
+    <body onload=init();>
 		<div id="top" class="top">
 			<div id="tituloWidget" class="tituloWidget">
 				<h2 class="titulo"><img class="logotipo" src="img/logo.png" /> Book Info</h2>
