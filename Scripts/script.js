@@ -27,167 +27,80 @@ function loadLivros(){
 }
 
 function createCategorias(){
-	//ELEMENTO DIV
-	var div = document.createElement("div");
-	//ATRIBUTOS DIV
-	var atributo = document.createAttribute("id");
-	atributo.nodeValue="formChosses";
+		t  = document.createElement("table");  
+        tb = document.createElement("tbody");
+		tr = document.createElement("tr"); 
+		td1 = document.createElement("td");
+		td2 = document.createElement("td2");
+		text1 = document.createTextNode("Categorias: ");
+		select1 = document.createElement("select");
+		text2 = document.createTextNode("Ver Apenas: ");
+		select2 = document.createElement("select");
+		div = document.createElement("div");
+		optionS = document.createElement("option");
+		option1 = document.createElement("option");
+		option2 = document.createElement("option");
+		option3 = document.createElement("option");
+		optionTextS = document.createTextNode("--");
+		optionText1 = document.createTextNode("5");
+		optionText2 = document.createTextNode("10");
+		optionText3 = document.createTextNode("25");
+
 	div.setAttribute("id","formChosses");
-	//div.setAttribute(atributo);
-	atributo = document.createAttribute("class");
-	atributo.nodeValue="formChosses";
-	div.setAttribute(atributo);
-	//CONTEUDO DO DIV
-	//ASSOCIAR CONTEUDO DIV AO SUPERIOR
+	div.setAttribute("class","formChosses");
+	
+	t.setAttribute("class","tabelaCategorias");
+	
+	td1.setAttribute("id","categorias");
+	td1.setAttribute("class","categorias");
+	
+	select1.setAttribute("id","comboCategorias");
+	select1.setAttribute("class","comboCategorias");
+	select1.setAttribute("size","1");
+	select1.setAttribute("onChange","loadLivros();");
+	
+	td2.setAttribute("id","showNResults");
+	td2.setAttribute("class","showNResults");
+
+	select2.setAttribute("id","comboShowNResults");
+	select2.setAttribute("class","comboShowNResults");
+	select2.setAttribute("size","1");
+	select2.setAttribute("onChange","loadLivros();");
+	
+	optionS.setAttribute("selected","selected");
+	optionS.setAttribute("value","none");
+	option1.setAttribute("value","5");
+	option2.setAttribute("value","10");
+	option3.setAttribute("value","25");
+	
+	
+	
+	option1.appendChild(optionText1);
+	option2.appendChild(optionText2);
+	option3.appendChild(optionText3);
+	optionS.appendChild(optionTextS);
+	
+	
+	select2.appendChild(optionS);
+	select2.appendChild(option1);
+	select2.appendChild(option2);
+	select2.appendChild(option3);
+	
+	td1.appendChild(text1);
+	td1.appendChild(select1);
+	td2.appendChild(text2);
+	td2.appendChild(select2);
+	
+	tr.appendChild(td1);
+	tr.appendChild(td2);
+	
+	tb.appendChild(tr);
+
+	t.appendChild(tb);
+	div.appendChild(t);
+	
 	elementDiv = document.getElementById("secondMenu");
 	elementDiv.appendChild(div);
-	
-	//ELEMENTO TABLE
-	var tabela = documet.createElement("table");
-	//ATRIBUTOS TABLE
-	atributo = document.createAttribute("class");
-	atributo.nodeValue="tabelaCategorias";
-	tabela.setAttribute(atributo);
-	//CONTEUDO DO TABLE
-	//ASSOCIAR CONTEUDO TABLE AO SUPERIOR
-	div.appendChild(tabela);
-	
-	
-	//ELEMENTO TR
-	var linha = documet.createElement("tr");
-	//ATRIBUTOS TR
-	//CONTEUDO DO TR
-	//ASSOCIAR CONTEUDO TR AO SUPERIOR
-	tabela.appendChild(linha);
-	
-	//ELEMENTO TD
-	var coluna = documet.createElement("td");
-	//ATRIBUTOS TD
-	atributo = document.createAttribute("id");
-	atributo.nodeValue="categorias";
-	coluna.setAttribute(atributo);
-	atributo = document.createAttribute("class");
-	atributo.nodeValue="categorias";
-	coluna.setAttribute(atributo);
-	//CONTEUDO DO TD
-	var text = document.createTextNode("Categorias: ");
-	coluna.appendChild(text);
-	//ASSOCIAR CONTEUDO TD AO SUPERIOR
-	linha.appendChild(coluna);
-	
-	//ELEMENTO SELECT
-	var select1 = documet.createElement("select");
-	//ATRIBUTOS SELECT
-	atributo = document.createAttribute("id");
-	atributo.nodeValue="comboCategorias";
-	select1.setAttribute(atributo);
-	atributo = document.createAttribute("class");
-	atributo.nodeValue="comboCategorias";
-	select1.setAttribute(atributo);
-	atributo = document.createAttribute("size");
-	atributo.nodeValue="1";
-	select1.setAttribute(atributo);
-	atributo = document.createAttribute("onChange");
-	atributo.nodeValue="loadLivros();";
-	select1.setAttribute(atributo);
-	//CONTEUDO DO SELECT
-	//ASSOCIAR CONTEUDO SELECT AO SUPERIOR
-	coluna.appendChild(select1);
-	
-	
-	
-	
-	
-	
-	//ELEMENTO TD
-	coluna = documet.createElement("td");
-	//ATRIBUTOS TD
-	atributo = document.createAttribute("id");
-	atributo.nodeValue="showNResults";
-	coluna.setAttribute(atributo);
-	atributo = document.createAttribute("class");
-	atributo.nodeValue="showNResults";
-	coluna.setAttribute(atributo);
-	//CONTEUDO DO TD
-	text = document.createTextNode("Ver Apenas: ");
-	coluna.appendChild(text);
-	//ASSOCIAR CONTEUDO TD AO SUPERIOR
-	linha.appendChild(coluna);
-	
-	
-	
-	
-	//ELEMENTO SELECT
-	var select2 = documet.createElement("select");
-	//ATRIBUTOS SELECT
-	atributo = document.createAttribute("id");
-	atributo.nodeValue="comboShowNResults";
-	select2.setAttribute(atributo);
-	atributo = document.createAttribute("class");
-	atributo.nodeValue="comboShowNResults";
-	select2.setAttribute(atributo);
-	atributo = document.createAttribute("size");
-	atributo.nodeValue="1";
-	select2.setAttribute(atributo);
-	atributo = document.createAttribute("onChange");
-	atributo.nodeValue="loadLivros();";
-	select2.setAttribute(atributo);
-	//CONTEUDO DO SELECT
-	//ASSOCIAR CONTEUDO SELECT AO SUPERIOR
-	coluna.appendChild(select2);
-	
-	//ELEMENTO OPTION SELECTED
-	optionS = documet.createElement("option");
-	//ATRIBUTOS OPTION SELECTED
-	atributo = document.createAttribute("selected");
-	atributo.nodeValue="selected";
-	optionS.setAttribute(atributo);
-	atributo = document.createAttribute("value");
-	atributo.nodeValue="none";
-	optionS.setAttribute(atributo);
-	//CONTEUDO DO OPTION SELECTED
-	var optionText = document.createTextNode("--");
-	optionS.appendChild(optionText);
-	//ASSOCIAR CONTEUDO OPTION SELECTED AO SUPERIOR
-	select2.appendChild(optionS);
-	
-	
-	//ELEMENTO OPTION
-	option = documet.createElement("option");
-	//ATRIBUTOS OPTION
-	atributo = document.createAttribute("value");
-	atributo.nodeValue="5";
-	option.setAttribute(atributo);
-	//CONTEUDO DO OPTION
-	var optionText = document.createTextNode("5");
-	option.appendChild(optionText);
-	//ASSOCIAR CONTEUDO OPTION AO SUPERIOR
-	select2.appendChild(option);
-	
-	//ELEMENTO OPTION
-	option = documet.createElement("option");
-	//ATRIBUTOS OPTION
-	atributo = document.createAttribute("value");
-	atributo.nodeValue="10";
-	option.setAttribute(atributo);
-	//CONTEUDO DO OPTION
-	var optionText = document.createTextNode("10");
-	option.appendChild(optionText);
-	//ASSOCIAR CONTEUDO OPTION AO SUPERIOR
-	select2.appendChild(option);
-	
-	//ELEMENTO OPTION
-	option = documet.createElement("option");
-	//ATRIBUTOS OPTION
-	atributo = document.createAttribute("value");
-	atributo.nodeValue="25";
-	option.setAttribute(atributo);
-	//CONTEUDO DO OPTION
-	var optionText = document.createTextNode("25");
-	option.appendChild(optionText);
-	//ASSOCIAR CONTEUDO OPTION AO SUPERIOR
-	select2.appendChild(option);
-	
 }
 
 function createEditora(){
