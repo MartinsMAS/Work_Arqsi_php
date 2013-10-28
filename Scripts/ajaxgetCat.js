@@ -43,7 +43,7 @@ function stateHandler()
 
 function preencheSelectCategorias(text)
 {
-    var selectCategoria = document.getElementById("categorias");
+    var selectCategoria = document.getElementById("comboCategorias");
     selectCategoria.innerHTML = "";
     var vetCat = text.split(',');
     for (var i = 0; i < vetCat.length; i++) {

@@ -15,6 +15,7 @@ function inicializar(){
 		//loadLivros();
 	}else if(selectEscolha.selectedIndex == '2'){
 		createCategorias();
+		MakeXMLHTTPCallCategorias();
 		//loadLivros();
 	}
 }
