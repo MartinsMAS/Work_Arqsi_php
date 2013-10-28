@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="pt" xmlns="http://www.w3.org/1999/xhtml" lang="pt">
     <head>
@@ -190,8 +190,7 @@
 		});
 	</script>
 		
-		<script type="text/javascript" src="Scripts/script.js"></script>
-<<<<<<< HEAD
+	<script type="text/javascript" src="Scripts/script.js"></script>
         <script type="text/javascript" src="Scripts/ajaxgetCat.js"></script>
         <link rel="stylesheet" type="text/css" href="CSS/widget.css" />
 				
@@ -205,15 +204,8 @@
 				margin: 0 auto;
 			}
 		</style>
-		
-=======
-                <script type="text/javascript" src="Scripts/ajaxgetCat.js"></script>
-
-                
-                <link rel="stylesheet" type="text/css" href="CSS/widget.css" />
->>>>>>> 00b7e47c8793568083620f8ea2c8baecf3fe1dfd
     </head>
-    <body onload=inicializar()();>
+    <body onload=inicializar();>
 		<div id="top" class="top">
 			<div id="tituloWidget" class="tituloWidget">
 				<h2 class="titulo"><img class="logotipo" src="img/logo.png" /> Book Info</h2>
