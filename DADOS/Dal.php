@@ -22,7 +22,7 @@ class Dal {
         }
         $vetCategorias = array();
         foreach ($this->editoras AS $editora) {
-            $CatByEd = $this->getCategoriasEditora($editora . "?categoria=todas");
+            $CatByEd = $this->getCategoriasEditora($editora->getLink() . "?categoria=todas");
             foreach ($CatByEd AS $Cat) {
                 if (!in_array($Cat, $vetCategorias)) {
                     $vetCategorias[] = $Cat;

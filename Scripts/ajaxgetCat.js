@@ -26,12 +26,12 @@ function MakeXMLHTTPCallCategorias()
         xmlHttpObj.open("GET", "AJAX/PedidosHTTP.php?idPedido=1", true);
 
         // Registo do EventHandler
-        xmlHttpObj.onreadystatechange = stateHandler;
+        xmlHttpObj.onreadystatechange = stateHandlerNew;
         xmlHttpObj.send(null); // pedido enviado ao servidor
     }
 }
 
-function stateHandler()
+function stateHandlerNew()
 {
     if (xmlHttpObj.readyState == 4 && xmlHttpObj.status == 200)
     {
