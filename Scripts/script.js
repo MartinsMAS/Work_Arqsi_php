@@ -9,7 +9,7 @@ function loadCategorias(){
 function inicializar(){
 	var selectEscolha = document.getElementById("comboSelect");
 	//var valorSelect = selectEscolha.options[selectEscolha.selectedIndex].text;
-	/*
+	
 	if(selectEscolha.selectedIndex == '1'){
 		createEditora();
                 MakeXMLHTTPCallNomesEdtoras();
@@ -17,9 +17,9 @@ function inicializar(){
 		createCategorias();
 		MakeXMLHTTPCallCategorias();
 		//loadLivros();
-	}*/
+	}
         //MakeXMLHTTPCallNLivros(6);
-        MakeXMLHTTPCallLivrosPorCategoria("Romance");
+        //MakeXMLHTTPCallLivrosPorCategoria("Romance");
 }
 			
 function loadLivros(){
