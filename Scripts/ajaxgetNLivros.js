@@ -50,7 +50,8 @@ function stateHandler()
             htmlDoc.async = false;
             htmlDoc.loadHTML(xml);
         }
-        var txt = htmlDoc.
+        var txt = window.htmlDoc.documentElement;
+        
         alert(txt);
     }
 }
