@@ -50,7 +50,14 @@ function stateHandler()
             htmlDoc.async = false;
             htmlDoc.loadHTML(xml);
         }
-        var txt = window.htmlDoc.documentElement;
+        var editoras = window.htmlDoc.documentElement.childNodes[1].childNodes[0];
+        for(var i = 0; i < editoras.lenght; i++){
+            var editora = editoras[i].childNodes;
+            for(var j = 0; j < editora.lenght; j++){
+                var book = editora[j].childNodes;
+                alert("Titulo: " + book[j].text);
+            }
+        }
         
         alert(txt);
     }

@@ -18,6 +18,7 @@ function inicializar(){
 		MakeXMLHTTPCallCategorias();
 		//loadLivros();
 	}
+        MakeXMLHTTPCallNLivros(6);
 }
 			
 function loadLivros(){
