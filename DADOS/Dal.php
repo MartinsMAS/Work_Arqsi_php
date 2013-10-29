@@ -13,6 +13,16 @@ class Dal {
         
     }
 
+    
+    public function getEditoras(){
+        if (!$this->editoras) {
+            $this->carregaEditoras();
+        }
+        
+        return $this->editoras;
+    }
+
+
     public function getNomesEditoras() {
         
         if (!$this->editoras) {
@@ -202,6 +212,11 @@ class Dal {
             $obj;
             $this->editoras[] = new Editora($nome, $link);
         }
+    }
+    
+    public function getLivrosPorCategoria($linkEditora,$categoria){
+        $strRequest = file_get_contents($linkEditora . "?categoria=" . $categoria);
+        return $strRequest;
     }
 
 }
