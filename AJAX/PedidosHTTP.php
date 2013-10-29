@@ -1,7 +1,7 @@
 <?php
 
 include '../DADOS/Dal.php';
-header("Content-Type: text/xml; charset=utf-8");
+
 
 define('RETURN_DEFAULT', "<?xml version='1.0' encoding='utf-8'?><resultado>pedido invalido</resultado>");
 
@@ -46,12 +46,13 @@ function getTodasCategorias() {
 }
 
 function getDadosLivro() {
+    header("Content-Type: text/xml; charset=iso-8859-1");
     if (isset($_GET['titulo'])) {
         $dal = new Dal();
         if ($strXML = $dal->getDadosLivro($_GET['titulo'])) {
-            
+
             echo $strXML;
-        }else{
+        } else {
             echo RETURN_DEFAULT;
         }
     } else {
@@ -59,10 +60,11 @@ function getDadosLivro() {
     }
 }
 
-function getDadosNLivros(){
+function getDadosNLivros() {
     $dal = new Dal();
-    if(isset($_GET['numero'])){
-        return $dal->getDadosNLivros($_GET['numero']);
+    if (isset($_GET['numero'])){
+        $load = $dal->getDadosNLivros($_GET['numero']);
+        echo $load;
     }else{
         echo RETURN_DEFAULT;
     }

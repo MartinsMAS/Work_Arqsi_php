@@ -35,16 +35,27 @@ function stateHandler()
 {
     if (xmlHttpObj.readyState == 4 && xmlHttpObj.status == 200)
     {
-        var xml = xmlHttpObj.responseXML;
-        
-        alert();
+        var xml = xmlHttpObj.responseText;
+
+        // A criar função de tratamento conversão de string recebida para xml
+        //var $doc = new DOMParser().parseFromString(xml, "text/html");
+        if (window.DOMParser)
+        {
+            parser = new DOMParser();
+            htmlDoc = parser.parseFromString(xml, "text/html");
+        }
+        else
+        {
+            htmlDoc = new ActiveXObject("Microsoft.HTMLDOM");
+            htmlDoc.async = false;
+            htmlDoc.loadHTML(xml);
+        }
+        var txt = htmlDoc.
+        alert(txt);
     }
 }
 
-function carregaLivro(text)
-{
-   
-}
+
 
 
 
