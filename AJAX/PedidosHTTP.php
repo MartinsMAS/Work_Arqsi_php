@@ -24,6 +24,9 @@ function analisarPedido() {
         case 3:
             getDadosNLivros();
             break;
+        case 6:
+            getNomesEditoras();
+            break;
         default:
             echo RETURN_DEFAULT;
     }
@@ -68,6 +71,11 @@ function getDadosNLivros() {
     }else{
         echo RETURN_DEFAULT;
     }
+}
+
+function getNomesEditoras(){
+    $dal = new Dal();
+    echo $dal->getNomesEditoras();
 }
 
 ?>

@@ -12,7 +12,7 @@ function inicializar(){
 	
 	if(selectEscolha.selectedIndex == '1'){
 		createEditora();
-		//loadLivros();
+                MakeXMLHTTPCallNomesEdtoras();
 	}else if(selectEscolha.selectedIndex == '2'){
 		createCategorias();
 		MakeXMLHTTPCallCategorias();
@@ -129,8 +129,6 @@ function createEditora(){
 	elementDiv = document.getElementById("secondMenu");
 	elementDiv.innerHTML=write;		
 }
-
-
 
 function createTableBook(){
 	

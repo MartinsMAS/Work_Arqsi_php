@@ -13,6 +13,24 @@ class Dal {
         
     }
 
+    public function getNomesEditoras() {
+        
+        if (!$this->editoras) {
+            $this->carregaEditoras();
+        }
+        $strReturn = "";
+        $i = 0;
+        $len = sizeof($this->editoras);
+        foreach ($this->editoras AS $editora){
+            $strReturn = $strReturn . $editora->getNome();
+            $i++;
+            if($i < $len){
+                $strReturn = $strReturn . ",";
+            }
+        }
+        return $strReturn;
+    }
+
     /* Retorna todas as categorias sem repetições TESTADO */
 
     public function getTodasCategorias() {

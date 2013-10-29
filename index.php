@@ -194,6 +194,7 @@
         <script type="text/javascript" src="Scripts/ajaxgetCat.js"></script>
         <script type="text/javascript" src="Scripts/ajaxgetLivro.js"></script>
         <script type="text/javascript" src="Scripts/ajaxgetNLivros.js"></script>
+        <script type="text/javascript" src="Scripts/ajaxgetNomesEditoras.js"></script>
         
         <link rel="stylesheet" type="text/css" href="CSS/widget.css" />
 				
