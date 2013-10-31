@@ -26,16 +26,17 @@ function MakeXMLHTTPCallLivro(titulo)
         xmlHttpObj.open("GET", url, true);
 
         // Registo do EventHandler
-        xmlHttpObj.onreadystatechange = stateHandler;
+        xmlHttpObj.onreadystatechange = stateHandlerGetLivro;
         xmlHttpObj.send(null); // pedido enviado ao servidor
     }
 }
 
-function stateHandler()
+function stateHandlerGetLivro()
 {
     if (xmlHttpObj.readyState == 4 && xmlHttpObj.status == 200)
     {
         var xml = xmlHttpObj.responseXML;
+        preencheDivPopUp(xml);
         
     }
 }

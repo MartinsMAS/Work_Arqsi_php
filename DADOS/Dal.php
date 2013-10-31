@@ -4,9 +4,10 @@ class Dal {
     /* Array com todos os endereços das editoras */
 
     private $editoras;
+   
 
     public function __construct() {
-        
+      
     }
 
     public function __destruct() {
@@ -217,6 +218,12 @@ class Dal {
     public function getLivrosPorCategoria($linkEditora,$categoria){
         $strRequest = file_get_contents($linkEditora . "?categoria=" . $categoria);
         return $strRequest;
+    }
+    
+    public function getUrlImgLivro($titulo){
+      
+        
+        
     }
 
 }
