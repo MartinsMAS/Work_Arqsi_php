@@ -188,17 +188,6 @@ function creteMiddleSection(){
 	elementDiv.appendChild(resultadoPesquisa);
 }
 
-function requestInformationPopUp(){
-
-}
-
-function preencheDivPopUp(){
-	
-	divPrincipal = document.getElementById("inline1");
-	
-	//teste.appendChild(textoTeste);
-}
-
 function createTableBook(){
 	
 	tabelaLivroDiv = document.createElement("div");
@@ -220,19 +209,9 @@ function createTableBook(){
 	
 	//METER ISTO A RECEBER OS VALORES PASSADOS Á FUNÇAO 
 	titulo = document.createTextNode("Titulo do livro");
-	textAutor = document.createTextNode("Ze caroço");
+	textAutor = document.createTextNode("Ze carroço");
 	textCategoria = document.createTextNode("Sexual");
-	
-	spanamos = document.createElement("span");
-	a = document.createElement("a");
-	a.setAttribute("href","#inline1");
-	a.setAttribute("class","fancybox");
-	a.setAttribute("title","teegref");
-	spanamos.setAttribute("onclick","requestInformationPopUp();");
-	a.appendChild(titulo);
-	spanamos.appendChild(a);
-	
-	
+
 	tabelaLivroDiv.setAttribute("id","tabelaLivroDiv");
 	tabelaLivroDiv.setAttribute("class","tabelaLivroDiv");
 	
@@ -264,7 +243,7 @@ function createTableBook(){
 	td4.appendChild(textAutor);
 	td3.appendChild(labelCategoria);
 	td3.appendChild(textCategoria);
-	td2.appendChild(spanamos);
+	td2.appendChild(titulo);
 	td1.appendChild(img);
 	
 	tr1.appendChild(td1);
@@ -283,5 +262,4 @@ function createTableBook(){
 	tabelaLivroDiv.appendChild(t);
 	
 	return tabelaLivroDiv;
-	//return t;
 }
