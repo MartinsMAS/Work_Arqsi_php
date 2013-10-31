@@ -21,7 +21,7 @@ function MakeXMLHTTPCallLivro(titulo)
 
     if (xmlHttpObj)
     {
-        // Definição do URL para efectuar pedido HTTP - método GET
+        // Definiï¿½ï¿½o do URL para efectuar pedido HTTP - mï¿½todo GET
         var url = "AJAX/PedidosHTTP.php?idPedido=2&titulo=" + titulo;
         xmlHttpObj.open("GET", url, true);
 
@@ -37,11 +37,6 @@ function stateHandler()
     {
         var xml = xmlHttpObj.responseXML;
         
-        alert();
     }
 }
 
-function carregaLivro(text)
-{
-   
-}
