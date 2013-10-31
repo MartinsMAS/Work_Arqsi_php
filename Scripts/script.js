@@ -171,11 +171,19 @@ function createTitleDiv(){
 function creteMiddleSection(){
 	elementDiv = document.getElementById("middle");
 	//elementDiv.innerHTML="";
+<<<<<<< HEAD
 	
 	resultadoPesquisa = document.createElement("div");
 	//resultadoPesquisa.setAttribute("id","resultadoPesquisa");
 	//resultadoPesquisa.setAttribute("class","resultadoPesquisa");
 	
+=======
+	
+	resultadoPesquisa = document.createElement("div");
+	//resultadoPesquisa.setAttribute("id","resultadoPesquisa");
+	//resultadoPesquisa.setAttribute("class","resultadoPesquisa");
+	
+>>>>>>> 34bae908a5e614dec54a523ed0e6c1a0aac839a3
 	for(i=0;i<10;i++){
 		tabelaLivro = createTableBook();
 		divTeste = document.createElement("div");
@@ -188,6 +196,7 @@ function creteMiddleSection(){
 	elementDiv.appendChild(resultadoPesquisa);
 }
 
+<<<<<<< HEAD
 function requestInformationPopUp(){
 
 }
@@ -199,6 +208,8 @@ function preencheDivPopUp(){
 	//teste.appendChild(textoTeste);
 }
 
+=======
+>>>>>>> 34bae908a5e614dec54a523ed0e6c1a0aac839a3
 function createTableBook(){
 	
 	tabelaLivroDiv = document.createElement("div");
@@ -220,6 +231,7 @@ function createTableBook(){
 	
 	//METER ISTO A RECEBER OS VALORES PASSADOS Á FUNÇAO 
 	titulo = document.createTextNode("Titulo do livro");
+<<<<<<< HEAD
 	textAutor = document.createTextNode("Ze caroço");
 	textCategoria = document.createTextNode("Sexual");
 	
@@ -233,6 +245,11 @@ function createTableBook(){
 	spanamos.appendChild(a);
 	
 	
+=======
+	textAutor = document.createTextNode("Ze carroço");
+	textCategoria = document.createTextNode("Sexual");
+
+>>>>>>> 34bae908a5e614dec54a523ed0e6c1a0aac839a3
 	tabelaLivroDiv.setAttribute("id","tabelaLivroDiv");
 	tabelaLivroDiv.setAttribute("class","tabelaLivroDiv");
 	
@@ -264,7 +281,11 @@ function createTableBook(){
 	td4.appendChild(textAutor);
 	td3.appendChild(labelCategoria);
 	td3.appendChild(textCategoria);
+<<<<<<< HEAD
 	td2.appendChild(spanamos);
+=======
+	td2.appendChild(titulo);
+>>>>>>> 34bae908a5e614dec54a523ed0e6c1a0aac839a3
 	td1.appendChild(img);
 	
 	tr1.appendChild(td1);
