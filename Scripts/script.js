@@ -12,7 +12,7 @@ function inicializar(){
 	
 	if(selectEscolha.selectedIndex == '1'){
 		createEditora();
-                MakeXMLHTTPCallNomesEdtoras();
+                //MakeXMLHTTPCallNomesEdtoras();
 	}else if(selectEscolha.selectedIndex == '2'){
 		createCategorias();
 		MakeXMLHTTPCallCategorias();
@@ -23,18 +23,21 @@ function inicializar(){
 }
 			
 function loadLivros(){
-	
-	var ret = createTableBook();
-	elementDiv = document.getElementById("middle");
-	elementDiv.innerHTML=ret;
+	creteMiddleSection();
+	//var ret = createTableBook();
+	//elementDiv = document.getElementById("middle");
+	//elementDiv.innerHTML=ret;
 }
 
 function createCategorias(){
+	elementDiv = document.getElementById("secondMenu");
+	elementDiv.innerHTML="";
+
 		t  = document.createElement("table");  
         tb = document.createElement("tbody");
 		tr = document.createElement("tr"); 
 		td1 = document.createElement("td");
-		td2 = document.createElement("td2");
+		td2 = document.createElement("td");
 		text1 = document.createTextNode("Categorias: ");
 		select1 = document.createElement("select");
 		text2 = document.createTextNode("Ver Apenas: ");
@@ -102,56 +105,162 @@ function createCategorias(){
 	t.appendChild(tb);
 	div.appendChild(t);
 	
-	elementDiv = document.getElementById("secondMenu");
 	elementDiv.appendChild(div);
 }
 
 function createEditora(){
-	var write = "";
-	
-	write += "<div id=\"formChosses\" class=\"formChosses\">";
-	
-	write += "<form method=\"get\" action=\"*\">";
-	write += "<table class=\"tabelaCategorias\">";
-	write += "<tr>";
-	write += "<td class=\"categorias\" id=\"categorias\">Categorias: ";
-	write += "<select size=\"1\" name=\"comboEditoras\" id=\"comboEditoras\" onChange=loadLivros();>";
-	write += "<option selected=\"selected\" value=\"editoras\">editoras</option>";
-	write += "<option value=\"editoras\">editoras</option>";
-	write += "<option value=\"editoras\">editoras</option>";
-	write += "<option value=\"editoras\">editoras</option>";
-	write += "</select></td>";
-	write += "<td class=\"showNResults\" id=\"showNResults\">Por página:";
-	write += "<input name=\"textSize\" id=\"textSize\" size=\"5\" type=\"text\" onChange=loadLivros(); />";
-	write += "</td></tr></table></form>";
-	
-	write += "</div>";
-			
 	elementDiv = document.getElementById("secondMenu");
-	elementDiv.innerHTML=write;		
+	elementDiv.innerHTML="";
+	
+		t  = document.createElement("table");  
+        tb = document.createElement("tbody");
+		tr = document.createElement("tr"); 
+		td1 = document.createElement("td");
+		td2 = document.createElement("td");
+		text1 = document.createTextNode("Nº Resultados Editora: ");		
+		input1 = document.createElement("input");
+		text2 = document.createTextNode("Resultados por Pagina: ");
+		input2 = document.createElement("input");
+		div = document.createElement("div");
+
+	div.setAttribute("id","formChosses");
+	div.setAttribute("class","formChosses");
+	
+	t.setAttribute("class","tabelaEditoras");
+	
+	td1.setAttribute("id","editoras");
+	td1.setAttribute("class","editoras");
+	
+	input1.setAttribute("id","nLivrosEditora");
+	input1.setAttribute("class","nLivrosEditora");
+	input1.setAttribute("type","text");
+	input1.setAttribute("name","nLivrosEditora");
+	input1.setAttribute("size","3");
+	
+	td2.setAttribute("id","showNResultsPage");
+	td2.setAttribute("class","showNResultsPage");
+
+	input2.setAttribute("id","showNResultsPage");
+	input2.setAttribute("class","showNResultsPage");
+	input2.setAttribute("type","text");
+	input2.setAttribute("name","showNResultsPage");
+	input2.setAttribute("size","3");
+	
+	
+	td1.appendChild(text1);
+	td1.appendChild(input1);
+	td2.appendChild(text2);
+	td2.appendChild(input2);
+	
+	tr.appendChild(td1);
+	tr.appendChild(td2);
+	
+	tb.appendChild(tr);
+
+	t.appendChild(tb);
+	div.appendChild(t);
+	
+	elementDiv.appendChild(div);
+	
+}
+
+function createTitleDiv(){
+	
+}
+
+function creteMiddleSection(){
+	elementDiv = document.getElementById("middle");
+	//elementDiv.innerHTML="";
+	
+	resultadoPesquisa = document.createElement("div");
+	//resultadoPesquisa.setAttribute("id","resultadoPesquisa");
+	//resultadoPesquisa.setAttribute("class","resultadoPesquisa");
+	
+	for(i=0;i<10;i++){
+		tabelaLivro = createTableBook();
+		divTeste = document.createElement("div");
+		divTeste.setAttribute("id","resultadoPesquisa");
+		divTeste.setAttribute("class","resultadoPesquisa");
+		divTeste.appendChild(tabelaLivro);
+		resultadoPesquisa.appendChild(divTeste);
+	}
+	
+	elementDiv.appendChild(resultadoPesquisa);
 }
 
 function createTableBook(){
 	
-	var retorno = "";
-	for(i=0;i<10;i++){
+	tabelaLivroDiv = document.createElement("div");
+	t  = document.createElement("table");  
+    tb = document.createElement("tbody");
+	tr1 = document.createElement("tr"); 
+	tr2 = document.createElement("tr"); 
+	tr3 = document.createElement("tr"); 
+	td1 = document.createElement("td");
+	td2 = document.createElement("td");
+	td3 = document.createElement("td");
+	td4 = document.createElement("td");
+	td5 = document.createElement("td");
+	img = document.createElement("img");
+			
+	labelAutor = document.createTextNode("Autor: ");
+	labelCategoria = document.createTextNode("Categoria: ");
+	labelMensagem = document.createTextNode("Para mais info, carregue na capa do livro ou no título");
 	
-	retorno += "<div id=\"resultadoPesquisa\" class=\"resultadoPesquisa\">";
-	retorno += "<div id=\"tabelaLivroDiv\" class=\"tabelaLivroDiv\">";
+	//METER ISTO A RECEBER OS VALORES PASSADOS Á FUNÇAO 
+	titulo = document.createTextNode("Titulo do livro");
+	textAutor = document.createTextNode("Ze carroço");
+	textCategoria = document.createTextNode("Sexual");
+
+	tabelaLivroDiv.setAttribute("id","tabelaLivroDiv");
+	tabelaLivroDiv.setAttribute("class","tabelaLivroDiv");
 	
-	retorno += "<table class=\"tabelaLivros\">";
-	retorno += "<tr>";
-	retorno += "<td class=\"imagemTabelaLivros\" id=\"imagemTabelaLivros\" rowspan=\"3\"><span><img class=\"imagemCapaLivroTabelaLivros\" src=\"img/logo.jpg\"  /></span></td>";
-	retorno += "<td class=\"tituloTabelaLivros\" id=\"tituloTabelaLivros\" colspan=\"2\"><span>Titulo do Livro</span></td>";
-	retorno += "</tr><tr>";
-	retorno += "<td class=\"categoriasTabelaLivros\" id=\"categoriasTabelaLivros\"><span><b>Categoria:</b> Romance</span></td>";
-	retorno += "<td class=\"autorTabelaLivros\" id=\"autorTabelaLivros\"><b>Autor:</b> Fernando Pessoa</td>";
-	retorno += "</tr><tr>";
-	retorno += "<td class=\"mensagemTabelaLivros\" id=\"mensagemTabelaLivros\" colspan=\"2\">Para mais info, carregue na capa do livro</td>";
-	retorno += "</tr></table>";
+	t.setAttribute("class","tabelaLivros");
 	
-	retorno += "</div>";
-	retorno += "</div>";
-	}
-	return retorno;
+	img.setAttribute("class","imagemCapaLivroTabelaLivros");
+	img.setAttribute("src","img/logo.jpg");
+	
+	td1.setAttribute("id","imagemCapaLivro");
+	td1.setAttribute("class","imagemCapaLivro");
+	td1.setAttribute("rowspan","3");
+	
+	td2.setAttribute("id","tituloLivro");
+	td2.setAttribute("class","tituloLivro");
+	td2.setAttribute("colspan","2");
+	
+	td3.setAttribute("id","categoriaLivro");
+	td3.setAttribute("class","categoriaLivro");
+	
+	td4.setAttribute("id","autorLivro");
+	td4.setAttribute("class","autorLivro");
+	
+	td5.setAttribute("id","mensagemUser");
+	td5.setAttribute("class","mensagemUser");
+	td5.setAttribute("colspan","2");
+	
+	td5.appendChild(labelMensagem);
+	td4.appendChild(labelAutor);
+	td4.appendChild(textAutor);
+	td3.appendChild(labelCategoria);
+	td3.appendChild(textCategoria);
+	td2.appendChild(titulo);
+	td1.appendChild(img);
+	
+	tr1.appendChild(td1);
+	tr1.appendChild(td2);
+	
+	tr2.appendChild(td3);
+	tr2.appendChild(td4);
+	
+	tr3.appendChild(td5);
+	
+	tb.appendChild(tr1);
+	tb.appendChild(tr2);
+	tb.appendChild(tr3);
+
+	t.appendChild(tb);
+	tabelaLivroDiv.appendChild(t);
+	
+	return tabelaLivroDiv;
+	//return t;
 }
