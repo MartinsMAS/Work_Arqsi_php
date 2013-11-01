@@ -80,7 +80,7 @@ class Dal {
         if (!$this->editoras) {
             $this->carregaEditoras();
         }
-        $titulo = str_replace(" ", "+" , $titulo);
+        $titulo = str_replace(" ", "+", $titulo);
         /* Ciclo que pesquisa em todas as editoras se encontra o livro, na primeira que encontre retorna o conteudo do livro. Se não encontra em nenhuma retorna falso */
         foreach ($this->editoras AS $editora) {
             try {
@@ -255,10 +255,14 @@ class Dal {
     }
 
     public function getUrlImgLivro($isbn) {
-        $arrJson = $this->getArrayJsonByIsbn($isbn);
-        $linkImg = $arrJson['items'][0]['volumeInfo']['imageLinks']['smallThumbnail'];
-        if ($linkImg) {
-            return $linkImg;
+        if ($isbn) {
+            $arrJson = $this->getArrayJsonByIsbn($isbn);
+            $linkImg = $arrJson['items'][0]['volumeInfo']['imageLinks']['smallThumbnail'];
+            if ($linkImg) {
+                return $linkImg;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -312,12 +316,12 @@ class Dal {
         $this->db_connect();
         $this->db_selectDbName();
         $ip = $_SERVER['REMOTE_ADDR'];
-        $time = date("H:i:s");  
+        $time = date("H:i:s");
         $sql = "INSERT INTO registo_pedidos (url, time, ip) VALUES ('$url', '$time', '$ip')";
         mysql_query($sql, $this->conn);
         $this->db_close();
-        
-            //CONTINUAR AQUI
+
+        //CONTINUAR AQUI
     }
 
 }
