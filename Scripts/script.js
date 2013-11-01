@@ -198,15 +198,14 @@ function creteMiddleSection(xml) {
 }
 
 function requestInformationPopUp(titulo) {
+    divPrincipal = document.getElementById("inline1");
+    divPrincipal.innerHTML = "";
     MakeXMLHTTPCallLivro(titulo);
 }
 
 function preencheDivPopUp(xml) {
 
-    divPrincipal = document.getElementById("inline1");
-    divPrincipal.innerHTML = "";
-
-    var title = xml.getElementsByTagName("title")[0].childNodes[0].nodeValue;
+       var title = xml.getElementsByTagName("title")[0].childNodes[0].nodeValue;
     var author = xml.getElementsByTagName("author")[0].childNodes[0].nodeValue;
     var category = xml.getElementsByTagName("category")[0].childNodes[0].nodeValue;
     var isbn = xml.getElementsByTagName("isbn")[0].childNodes[0].nodeValue;
