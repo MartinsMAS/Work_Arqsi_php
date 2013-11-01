@@ -58,8 +58,9 @@ function getDadosLivro() {
     header("Content-Type: text/xml; charset=iso-8859-1");
     if (isset($_GET['titulo'])) {
         $dal = new Dal();
-        if ($strXML = $dal->getDadosLivro($_GET['titulo'])) {
-
+        $strXML = $dal->getDadosLivro($_GET['titulo']);
+        if ($strXML) {
+            $dal->insereRegistoPedido($_SERVER['REQUEST_URI']);
             echo $strXML;
         } else {
             echo RETURN_DEFAULT;
@@ -70,25 +71,9 @@ function getDadosLivro() {
 }
 
 function getDadosNLivros() {
-    $dal = new Dal();
+     header("Content-Type: text/xml; charset=iso-8859-1");
     if (isset($_GET['numero'])) {
-        $load = $dal->getDadosNLivros($_GET['numero']);
-        echo $load;
-    } else {
-        echo RETURN_DEFAULT;
-    }
-}
-
-function getNomesEditoras() {
-    $dal = new Dal();
-    echo $dal->getNomesEditoras();
-}
-
-function getLivrosPorCategoria() {
-    header("Content-Type: text/xml; charset=iso-8859-1");
-
-    if (isset($_GET['categoria'])) {
-        $dal = new Dal();
+         $dal = new Dal();
         $editoras = $dal->getEditoras();
 
         $xmlDoc = new DOMDocument();
@@ -97,23 +82,18 @@ function getLivrosPorCategoria() {
         $xmlDoc->appendChild($tagRoot);
 
         foreach ($editoras AS $editora) {
-            
+
             $tagEditora = $xmlDoc->createElement("editora");
             $tagEditora->setAttribute("name", $editora->getNome());
             $tagRoot->appendChild($tagEditora);
 
             $htmlRequest = new DOMDocument();
-            $strRequest = $dal->getLivrosPorCategoria($editora->getLink(), $_GET['categoria']);
+            $strRequest = $dal->getDadosNLivros($_GET['numero']);
             $htmlRequest->loadHTML($strRequest);
             $strFromHtml = $htmlRequest->saveXML();
             $xmlResult = new DOMDocument();
             $xmlResult->loadXML($strFromHtml, LIBXML_NOWARNING);
 
-            /* TESTE 
-              $xmlTeste = new DOMDocument();
-              $xmlTeste->loadXML("<root><book><titulo>Teste1</titulo></book><book><titulo>Teste2</titulo></book></root>");
-              $nosLivrosTeste = $xmlResult->getElementsByTagName("book");
-             */
             $nosLivros = $xmlResult->getElementsByTagName("book");
             foreach ($nosLivros AS $livro) {
                 // criar a nova tag book e inserir dentro da editora
@@ -121,6 +101,7 @@ function getLivrosPorCategoria() {
                 $tagEditora->appendChild($newTagBook);
 
                 $childsBook = $livro->childNodes;
+                $isbn;
                 foreach ($childsBook AS $child) {
                     $tagName = $child->nodeName;
                     switch ($tagName) {
@@ -147,6 +128,7 @@ function getLivrosPorCategoria() {
                             $nodeText = $xmlDoc->createTextNode($child->nodeValue);
                             $node->appendChild($nodeText);
                             $newTagBook->appendChild($node);
+                            $isbn = $child->nodeValue; // A usar no request da imagem e sinopse
                             break;
                         case 'publicacao':
                             $node = $xmlDoc->createElement("publicacao");
@@ -162,27 +144,145 @@ function getLivrosPorCategoria() {
                             break;
                     }
                 }
+                // Acrescentar link para imagem
+                $linkImg = $dal->getUrlImgLivro($isbn);
+                if ($linkImg) {
+                    $tagLinkImg = $xmlDoc->createElement("cover");
+                    $tagTxtNodeLinkImg = $xmlDoc->createTextNode($linkImg);
+                    $tagLinkImg->appendChild($tagTxtNodeLinkImg);
+                    $newTagBook->appendChild($tagLinkImg);
+                }
+            }
+        }        
+        $dal->insereRegistoPedido($_SERVER['REQUEST_URI']);
+        echo $xmlDoc->saveXML();
+    } else {
+        echo RETURN_DEFAULT;
+    }
+    
+    /*
+    $dal = new Dal();
+    if (isset($_GET['numero'])) {
+        $load = $dal->getDadosNLivros($_GET['numero']);
+        $dal->insereRegistoPedido($_SERVER['REQUEST_URI']);
+        echo $load;
+    } else {
+        echo RETURN_DEFAULT;
+    }
+     * 
+     */
+}
+
+function getNomesEditoras() {
+    $dal = new Dal();
+    echo $dal->getNomesEditoras();
+}
+
+function getLivrosPorCategoria() {
+    header("Content-Type: text/xml; charset=iso-8859-1");
+
+    if (isset($_GET['categoria'])) {
+        $dal = new Dal();
+        $editoras = $dal->getEditoras();
+
+        $xmlDoc = new DOMDocument();
+
+        $tagRoot = $xmlDoc->createElement("editoras");
+        $xmlDoc->appendChild($tagRoot);
+
+        foreach ($editoras AS $editora) {
+
+            $tagEditora = $xmlDoc->createElement("editora");
+            $tagEditora->setAttribute("name", $editora->getNome());
+            $tagRoot->appendChild($tagEditora);
+
+            $htmlRequest = new DOMDocument();
+            $strRequest = $dal->getLivrosPorCategoria($editora->getLink(), $_GET['categoria']);
+            $htmlRequest->loadHTML($strRequest);
+            $strFromHtml = $htmlRequest->saveXML();
+            $xmlResult = new DOMDocument();
+            $xmlResult->loadXML($strFromHtml, LIBXML_NOWARNING);
+
+            $nosLivros = $xmlResult->getElementsByTagName("book");
+            foreach ($nosLivros AS $livro) {
+                // criar a nova tag book e inserir dentro da editora
+                $newTagBook = $xmlDoc->createElement("book");
+                $tagEditora->appendChild($newTagBook);
+
+                $childsBook = $livro->childNodes;
+                $isbn;
+                foreach ($childsBook AS $child) {
+                    $tagName = $child->nodeName;
+                    switch ($tagName) {
+                        case 'title':
+                            $node = $xmlDoc->createElement("title");
+                            $nodeText = $xmlDoc->createTextNode($child->nodeValue);
+                            $node->appendChild($nodeText);
+                            $newTagBook->appendChild($node);
+                            break;
+                        case 'author':
+                            $node = $xmlDoc->createElement("author");
+                            $nodeText = $xmlDoc->createTextNode($child->nodeValue);
+                            $node->appendChild($nodeText);
+                            $newTagBook->appendChild($node);
+                            break;
+                        case 'category':
+                            $node = $xmlDoc->createElement("category");
+                            $nodeText = $xmlDoc->createTextNode($child->nodeValue);
+                            $node->appendChild($nodeText);
+                            $newTagBook->appendChild($node);
+                            break;
+                        case 'isbn':
+                            $node = $xmlDoc->createElement("isbn");
+                            $nodeText = $xmlDoc->createTextNode($child->nodeValue);
+                            $node->appendChild($nodeText);
+                            $newTagBook->appendChild($node);
+                            $isbn = $child->nodeValue; // A usar no request da imagem e sinopse
+                            break;
+                        case 'publicacao':
+                            $node = $xmlDoc->createElement("publicacao");
+                            $nodeText = $xmlDoc->createTextNode($child->nodeValue);
+                            $node->appendChild($nodeText);
+                            $newTagBook->appendChild($node);
+                            break;
+                        case 'news':
+                            $node = $xmlDoc->createElement("news");
+                            $nodeText = $xmlDoc->createTextNode($child->nodeValue);
+                            $node->appendChild($nodeText);
+                            $newTagBook->appendChild($node);
+                            break;
+                    }
+                }
+                // Acrescentar link para imagem
+                $linkImg = $dal->getUrlImgLivro($isbn);
+                if ($linkImg) {
+                    $tagLinkImg = $xmlDoc->createElement("cover");
+                    $tagTxtNodeLinkImg = $xmlDoc->createTextNode($linkImg);
+                    $tagLinkImg->appendChild($tagTxtNodeLinkImg);
+                    $newTagBook->appendChild($tagLinkImg);
+                }
             }
         }
+
+        $dal->insereRegistoPedido($_SERVER['REQUEST_URI']);
         echo $xmlDoc->saveXML();
     } else {
         echo RETURN_DEFAULT;
     }
 }
 
-function getSinopsePorIsbn(){
-    if(isset($_GET['isbn'])){
+function getSinopsePorIsbn() {
+    if (isset($_GET['isbn'])) {
         $dal = new Dal();
         $strSinopse = $dal->getSinopseLivro($_GET['isbn']);
-        if($strSinopse){
+        if ($strSinopse) {
             echo $strSinopse;
-        }else{
+        } else {
             return RETURN_DEFAULT;
         }
-    }else{
+    } else {
         echo RETURN_DEFAULT;
     }
 }
-
 
 ?>

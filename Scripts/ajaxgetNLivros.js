@@ -26,17 +26,18 @@ function MakeXMLHTTPCallNLivros(n)
         xmlHttpObj.open("GET", url, true);
 
         // Registo do EventHandler
-        xmlHttpObj.onreadystatechange = stateHandler;
+        xmlHttpObj.onreadystatechange = stateHandlerNLivros;
         xmlHttpObj.send(null); // pedido enviado ao servidor
     }
 }
 
-function stateHandler()
+function stateHandlerNLivros()
 {
     if (xmlHttpObj.readyState == 4 && xmlHttpObj.status == 200)
     {
-        var xml = xmlHttpObj.responseText;
-
+        var xml = xmlHttpObj.responseXML;
+        alert();
+/*
         // A criar função de tratamento conversão de string recebida para xml
         //var $doc = new DOMParser().parseFromString(xml, "text/html");
         if (window.DOMParser)
@@ -59,12 +60,13 @@ function stateHandler()
                 alert("Titulo: " + book[j].text);
             }
         }
-        */
+        
        var editoras = window.htmlDoc.getElementsByTagName("editora");
        for (var i = 0; i < editoras.lenght; i++){
            
        } 
         alert(txt);
+        */
     }
 }
 

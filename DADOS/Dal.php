@@ -7,10 +7,10 @@ class Dal {
 
     private $editoras;
     // Acesso à base de dados
-    private $servername = 'http://phpdev2.dei.isep.ipp.pt/';
+    private $servername = 'localhost';
     private $dbname = 'i111417';
-    private $username = 'i111417';
-    private $pass = '218300';
+    private $username = 'root';
+    private $pass = '';
     private $conn;
 
     public function __construct() {
@@ -80,7 +80,7 @@ class Dal {
         if (!$this->editoras) {
             $this->carregaEditoras();
         }
-        str_replace(" ", "+" , $titulo);
+        $titulo = str_replace(" ", "+" , $titulo);
         /* Ciclo que pesquisa em todas as editoras se encontra o livro, na primeira que encontre retorna o conteudo do livro. Se não encontra em nenhuma retorna falso */
         foreach ($this->editoras AS $editora) {
             try {
@@ -133,11 +133,6 @@ class Dal {
             $this->carregaEditoras();
         }
 
-        /*
-          $livros = new DOMDocument();
-          $editorasElem = $livros->createElement("editoras");
-          $livros->appendChild($editorasElem);
-         */
         $strFinal = "<editoras>";
         foreach ($this->editoras AS $editora) {
             $nomeEditora = $editora->getNome();
@@ -313,9 +308,16 @@ class Dal {
     }
 
     //TESTE
-    function getBookByTitle($title) {
-        $sql = "SELECT * FROM LIVRO WHERE title=\"$title\"";
-        return $recordset = mysql_query($sql, $this->conn);
+    function insereRegistoPedido($url) {
+        $this->db_connect();
+        $this->db_selectDbName();
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $time = date("H:i:s");  
+        $sql = "INSERT INTO registo_pedidos (url, time, ip) VALUES ('$url', '$time', '$ip')";
+        mysql_query($sql, $this->conn);
+        $this->db_close();
+        
+            //CONTINUAR AQUI
     }
 
 }
