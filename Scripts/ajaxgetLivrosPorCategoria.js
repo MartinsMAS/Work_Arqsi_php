@@ -35,8 +35,8 @@ function stateHandlerLivrosPorCategoria()
     if (xmlHttpObj.readyState == 4 && xmlHttpObj.status == 200)
     {
         var xml = xmlHttpObj.responseXML;
+		creteMiddleSection(xml);
         //TRATAMENTO DE XML PARA INSERIR OS LIVROS PESQUISADOS NA PÁGINA
-        
         /*
          * FORMATO XML
          * <editoras>

@@ -23,10 +23,7 @@ function inicializar() {
 }
 
 function loadLivros() {
-    creteMiddleSection();
-    //var ret = createTableBook();
-    //elementDiv = document.getElementById("middle");
-    //elementDiv.innerHTML=ret;
+	MakeXMLHTTPCallLivrosPorCategoria("Romance");
 }
 
 function createCategorias() {
@@ -168,21 +165,33 @@ function createTitleDiv() {
 
 }
 
-function creteMiddleSection() {
+function creteMiddleSection(xml) {
     elementDiv = document.getElementById("middle");
     //elementDiv.innerHTML="";
 
     resultadoPesquisa = document.createElement("div");
-    //resultadoPesquisa.setAttribute("id","resultadoPesquisa");
-    //resultadoPesquisa.setAttribute("class","resultadoPesquisa");
 
-    for (i = 0; i < 10; i++) {
-        tabelaLivro = createTableBook();
-        divTeste = document.createElement("div");
-        divTeste.setAttribute("id", "resultadoPesquisa");
-        divTeste.setAttribute("class", "resultadoPesquisa");
-        divTeste.appendChild(tabelaLivro);
-        resultadoPesquisa.appendChild(divTeste);
+	var editoras = xml.getElementsByTagName("editora");
+	
+	
+	for (i = 0; i < editoras.length; i++) {
+		divCategoria = document.createElement("div");
+		divCategoria.setAttribute("id", "divisoriaPesquisa");
+		divCategoria.setAttribute("class", "divisoriaPesquisa");
+		//tabelaDivisoria = createDivisoria();
+		//divCategoria.appendChild(tabelaDivisoria);
+		//resultadoPesquisa.appendChild(divCategoria);
+		
+		var books = editoras[i].getElementsByTagName("book");
+		
+		for (j = 0; j < books.length; j++) {
+			tabelaLivro = createTableBook(books[j]);
+			divTeste = document.createElement("div");
+			divTeste.setAttribute("id", "resultadoPesquisa");
+			divTeste.setAttribute("class", "resultadoPesquisa");
+			divTeste.appendChild(tabelaLivro);
+			resultadoPesquisa.appendChild(divTeste);
+		}
     }
 
     elementDiv.appendChild(resultadoPesquisa);
@@ -205,32 +214,84 @@ function preencheDivPopUp(xml) {
 
     pTitle = document.createElement("p");
     txtNodeTitle = document.createTextNode(title);
-    pTitle.appendChild(txtNodeTitle);
+	labelNodeTitle = document.createTextNode("Título: ");
+	spanLabelTitle = document.createElement("span");
+	spanTextTitle = document.createElement("span");
+	spanLabelTitle.setAttribute("class","textoLabelPopUp");
+	spanTextTitle.setAttribute("class","textoTituloPopUp");
+	spanLabelTitle.appendChild(labelNodeTitle);
+	spanTextTitle.appendChild(txtNodeTitle);
+	pTitle.appendChild(spanLabelTitle);
+    pTitle.appendChild(spanTextTitle);
     divPrincipal.appendChild(pTitle);
 
+	
     pAuthor = document.createElement("p");
     txtNodeAuthor = document.createTextNode(author);
-    pTitle.appendChild(txtNodeAuthor);
+	labelNodeAuthor = document.createTextNode("Autor: ");
+	spanLabelAutor = document.createElement("span");
+	spanTextAutor = document.createElement("span");
+	spanLabelAutor.setAttribute("class","textoLabelPopUp");
+	spanTextAutor.setAttribute("class","textoAtributosPopUp");
+	spanLabelAutor.appendChild(labelNodeAuthor);
+	spanTextAutor.appendChild(txtNodeAuthor);
+    pAuthor.appendChild(spanLabelAutor);
+	pAuthor.appendChild(spanTextAutor);
     divPrincipal.appendChild(pAuthor);
 
+	
+	
     pCategory = document.createElement("p");
     txtNodeCategory = document.createTextNode(category);
-    pTitle.appendChild(txtNodeCategory);
+	labelNodeCategory = document.createTextNode("Categoria: ");
+	spanLabelCategory = document.createElement("span");
+	spanTextCategory = document.createElement("span");
+	spanLabelCategory.setAttribute("class","textoLabelPopUp");
+	spanTextCategory.setAttribute("class","textoAtributosPopUp");
+	spanLabelCategory.appendChild(labelNodeCategory);
+	spanTextCategory.appendChild(txtNodeCategory);
+    pCategory.appendChild(spanLabelCategory);
+	pCategory.appendChild(spanTextCategory);
     divPrincipal.appendChild(pCategory);
 
     pIsbn = document.createElement("p");
     txtNodeIsbn = document.createTextNode(isbn);
-    pTitle.appendChild(txtNodeIsbn);
+	labelNodeIsbn = document.createTextNode("ISBN: ");
+	spanLabelIsbn = document.createElement("span");
+	spanTextIsbn = document.createElement("span");
+	spanLabelIsbn.setAttribute("class","textoLabelPopUp");
+	spanTextIsbn.setAttribute("class","textoAtributosPopUp");
+	spanLabelIsbn.appendChild(labelNodeIsbn);
+	spanTextIsbn.appendChild(txtNodeIsbn);
+    pIsbn.appendChild(spanLabelIsbn);
+	pIsbn.appendChild(spanTextIsbn);
     divPrincipal.appendChild(pIsbn);
 
-    pNews = document.createElement("p");
-    txtNodeNews = document.createTextNode(isbn);
-    pTitle.appendChild(txtNodeNews);
-    divPrincipal.appendChild(pNews);
+    
+    txtNodeNews = document.createTextNode(news);
+	if(txtNodeNews == "nao"){
+		divNews = document.createElement("div");
+		marquee = document.createElement("marquee");
+		marquee.setAttribute("behavior","scroll");
+		marquee.setAttribute("direction","left");
+		text = document.createTextNode("Novidade");
+		span = document.createElement("span");
+		span.setAttribute("class","textoRolantePopUp");
+		span.appendChild(text);
+		marquee.appendChild(span);
+		divNews.appendChild(marquee);
+		divPrincipal.appendChild(divNews);
+	}
+    
 
 }
 
-function createTableBook() {
+function createTableBook(xml) {
+
+	var title = xml.getElementsByTagName("title")[0].childNodes[0].nodeValue;
+    var author = xml.getElementsByTagName("author")[0].childNodes[0].nodeValue;
+    var category = xml.getElementsByTagName("category")[0].childNodes[0].nodeValue;
+	//var image = xml.getElementsByTagName("cover")[0].childNodes[0].nodeValue;
 
     tabelaLivroDiv = document.createElement("div");
     t = document.createElement("table");
@@ -250,20 +311,23 @@ function createTableBook() {
     labelMensagem = document.createTextNode("Para mais info, carregue na capa do livro ou no título");
 
     //METER ISTO A RECEBER OS VALORES PASSADOS Á FUNÇAO 
-    titulo = document.createTextNode("Ficciones");
-    textAutor = document.createTextNode("Ze caroço");
-    textCategoria = document.createTextNode("Sexual");
+    //titulo = document.createTextNode("Ficciones");
+    //textAutor = document.createTextNode("Ze caroço");
+    //textCategoria = document.createTextNode("Sexual");
+	titulo = document.createTextNode(title);
+    textAutor = document.createTextNode(author);
+    textCategoria = document.createTextNode(category);
 
-    spanamos = document.createElement("span");
+    span = document.createElement("span");
     a = document.createElement("a");
     a.setAttribute("href", "#inline1");
     a.setAttribute("class", "fancybox");
-    a.setAttribute("title", "teegref");
+    a.setAttribute("title", "Informação");
     var txtTitulo = titulo.nodeValue;
     var callFunction = "requestInformationPopUp(\"" + txtTitulo + "\");";
-    spanamos.setAttribute("onclick", callFunction);
+    span.setAttribute("onclick", callFunction);
     a.appendChild(titulo);
-    spanamos.appendChild(a);
+    span.appendChild(a);
 
 
     tabelaLivroDiv.setAttribute("id", "tabelaLivroDiv");
@@ -271,9 +335,11 @@ function createTableBook() {
 
     t.setAttribute("class", "tabelaLivros");
 
+	//METER ISTO A RECEBER OS VALORES PASSADOS Á FUNÇAO
     img.setAttribute("class", "imagemCapaLivroTabelaLivros");
     img.setAttribute("src", "img/logo.jpg");
-
+	//img.setAttribute("src", image);
+	
     td1.setAttribute("id", "imagemCapaLivro");
     td1.setAttribute("class", "imagemCapaLivro");
     td1.setAttribute("rowspan", "3");
@@ -297,7 +363,7 @@ function createTableBook() {
     td4.appendChild(textAutor);
     td3.appendChild(labelCategoria);
     td3.appendChild(textCategoria);
-    td2.appendChild(spanamos);
+    td2.appendChild(span);
     td1.appendChild(img);
 
     tr1.appendChild(td1);
@@ -316,5 +382,4 @@ function createTableBook() {
     tabelaLivroDiv.appendChild(t);
 
     return tabelaLivroDiv;
-    //return t;
 }
