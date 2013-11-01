@@ -1,41 +1,40 @@
 <?php
 
+error_reporting(0);
+
 class Dal {
     /* Array com todos os endereços das editoras */
 
     private $editoras;
-   
 
     public function __construct() {
-      
+        
     }
 
     public function __destruct() {
         
     }
 
-    
-    public function getEditoras(){
+    public function getEditoras() {
         if (!$this->editoras) {
             $this->carregaEditoras();
         }
-        
+
         return $this->editoras;
     }
 
-
     public function getNomesEditoras() {
-        
+
         if (!$this->editoras) {
             $this->carregaEditoras();
         }
         $strReturn = "";
         $i = 0;
         $len = sizeof($this->editoras);
-        foreach ($this->editoras AS $editora){
+        foreach ($this->editoras AS $editora) {
             $strReturn = $strReturn . $editora->getNome();
             $i++;
-            if($i < $len){
+            if ($i < $len) {
                 $strReturn = $strReturn . ",";
             }
         }
@@ -77,12 +76,45 @@ class Dal {
         }
         /* Ciclo que pesquisa em todas as editoras se encontra o livro, na primeira que encontre retorna o conteudo do livro. Se não encontra em nenhuma retorna falso */
         foreach ($this->editoras AS $editora) {
-            $livro = new DOMDocument();
-            $linkEditora = $editora->getLink() . "?titulo=$titulo";
-            $livro->load($linkEditora);
-            $noInit = $livro->childNodes->item(0)->nodeValue;
-            if ($noInit != 'vazio' && $noInit != null && $noInit != 'invalido') {
-                return $livro->saveXML();
+            try {
+                $livro = new DOMDocument();
+                $linkEditora = $editora->getLink() . "?titulo=$titulo";
+                // $linkFinal = urlencode($linkEditora);
+                $html = file_get_contents($linkEditora);
+                $livro->loadHTML($html);
+
+                $dal = new Dal();
+
+                // Acrescentar o link da capa do livro ao XML
+                $isbn = $livro->getElementsByTagName("isbn")->item(0)->nodeValue;
+
+                $linkCover = $dal->getUrlImgLivro($isbn);
+                if ($linkCover) {
+                    $nodeBook = $livro->getElementsByTagName("book")->item(0);
+                    $nodeLinkImg = $livro->createElement("cover");
+                    $nodeTxtLinkImg = $livro->createTextNode($linkCover);
+                    $nodeLinkImg->appendChild($nodeTxtLinkImg);
+                    $nodeBook->appendChild($nodeLinkImg);
+                }
+                
+                // Acrescentar a sinopse ao XML
+                $strSinopse = $dal->getSinopseLivro($isbn);
+               if($strSinopse){
+                   $nodeBook = $livro->getElementsByTagName("book")->item(0);
+                   $nodeSinopse = $livro->createElement("sinopse");
+                   $nodeTxtSinopse = $livro->createTextNode($strSinopse);
+                   $nodeSinopse->appendChild($nodeTxtSinopse);
+                   $nodeBook->appendChild($nodeSinopse);
+               } 
+                
+                
+                
+                
+                if ($livro->getElementsByTagName("book")->item(0)) {
+                    return $livro->saveXML();
+                }
+            } catch (Exception $e) {
+                continue;
             }
         }
         return false;
@@ -214,16 +246,37 @@ class Dal {
             $this->editoras[] = new Editora($nome, $link);
         }
     }
-    
-    public function getLivrosPorCategoria($linkEditora,$categoria){
+
+    public function getLivrosPorCategoria($linkEditora, $categoria) {
         $strRequest = file_get_contents($linkEditora . "?categoria=" . $categoria);
         return $strRequest;
     }
-    
-    public function getUrlImgLivro($titulo){
-      
-        
-        
+
+    public function getUrlImgLivro($isbn) {
+        $arrJson = $this->getArrayJsonByIsbn($isbn);
+        $linkImg = $arrJson['items'][0]['volumeInfo']['imageLinks']['smallThumbnail'];
+        if ($linkImg) {
+            return $linkImg;
+        } else {
+            return false;
+        }
+    }
+
+    public function getSinopseLivro($isbn) {
+        $arrJson = $this->getArrayJsonByIsbn($isbn);
+        $sinJson = $arrJson['items'][0]['volumeInfo']['description'];
+        if ($sinJson) {
+            return $sinJson;
+        } else {
+            return false;
+        }
+    }
+
+    private function getArrayJsonByIsbn($isbn) {
+        $link = "https://www.googleapis.com/books/v1/volumes?q=isbn:" . $isbn;
+        $txtJson = file_get_contents($link);
+        $arrJson = json_decode($txtJson, true);
+        return $arrJson;
     }
 
 }

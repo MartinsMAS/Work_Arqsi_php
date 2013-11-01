@@ -30,6 +30,9 @@ function analisarPedido() {
         case 6:
             getNomesEditoras();
             break;
+        case 7:
+            getSinopsePorIsbn();
+            break;
         default:
             echo RETURN_DEFAULT;
     }
@@ -166,5 +169,20 @@ function getLivrosPorCategoria() {
         echo RETURN_DEFAULT;
     }
 }
+
+function getSinopsePorIsbn(){
+    if(isset($_GET['isbn'])){
+        $dal = new Dal();
+        $strSinopse = $dal->getSinopseLivro($_GET['isbn']);
+        if($strSinopse){
+            echo $strSinopse;
+        }else{
+            return RETURN_DEFAULT;
+        }
+    }else{
+        echo RETURN_DEFAULT;
+    }
+}
+
 
 ?>
