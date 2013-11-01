@@ -6,6 +6,12 @@ class Dal {
     /* Array com todos os endereços das editoras */
 
     private $editoras;
+    // Acesso à base de dados
+    private $servername = 'http://phpdev2.dei.isep.ipp.pt/';
+    private $dbname = 'i111417';
+    private $username = 'i111417';
+    private $pass = '218300';
+    private $conn;
 
     public function __construct() {
         
@@ -74,6 +80,7 @@ class Dal {
         if (!$this->editoras) {
             $this->carregaEditoras();
         }
+        str_replace(" ", "+" , $titulo);
         /* Ciclo que pesquisa em todas as editoras se encontra o livro, na primeira que encontre retorna o conteudo do livro. Se não encontra em nenhuma retorna falso */
         foreach ($this->editoras AS $editora) {
             try {
@@ -96,20 +103,20 @@ class Dal {
                     $nodeLinkImg->appendChild($nodeTxtLinkImg);
                     $nodeBook->appendChild($nodeLinkImg);
                 }
-                
+
                 // Acrescentar a sinopse ao XML
                 $strSinopse = $dal->getSinopseLivro($isbn);
-               if($strSinopse){
-                   $nodeBook = $livro->getElementsByTagName("book")->item(0);
-                   $nodeSinopse = $livro->createElement("sinopse");
-                   $nodeTxtSinopse = $livro->createTextNode($strSinopse);
-                   $nodeSinopse->appendChild($nodeTxtSinopse);
-                   $nodeBook->appendChild($nodeSinopse);
-               } 
-                
-                
-                
-                
+                if ($strSinopse) {
+                    $nodeBook = $livro->getElementsByTagName("book")->item(0);
+                    $nodeSinopse = $livro->createElement("sinopse");
+                    $nodeTxtSinopse = $livro->createTextNode($strSinopse);
+                    $nodeSinopse->appendChild($nodeTxtSinopse);
+                    $nodeBook->appendChild($nodeSinopse);
+                }
+
+
+
+
                 if ($livro->getElementsByTagName("book")->item(0)) {
                     return $livro->saveXML();
                 }
@@ -277,6 +284,38 @@ class Dal {
         $txtJson = file_get_contents($link);
         $arrJson = json_decode($txtJson, true);
         return $arrJson;
+    }
+
+    /* BASE DE DADOS PHPDEV2 */
+
+    function db_connect() {
+
+        if (!$this->conn) {
+            $this->conn = mysql_connect($this->servername, $this->username, $this->pass);
+            if (!$this->conn) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    function db_selectDbName() {
+        if (!mysql_select_db($this->dbname, $this->conn)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function db_close() {
+        mysql_close();
+    }
+
+    //TESTE
+    function getBookByTitle($title) {
+        $sql = "SELECT * FROM LIVRO WHERE title=\"$title\"";
+        return $recordset = mysql_query($sql, $this->conn);
     }
 
 }
