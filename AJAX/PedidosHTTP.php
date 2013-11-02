@@ -81,6 +81,8 @@ function getDadosNLivros() {
         $tagRoot = $xmlDoc->createElement("editoras");
         $xmlDoc->appendChild($tagRoot);
 
+        $arrLinksImg = array();
+
         foreach ($editoras AS $editora) {
 
             $tagEditora = $xmlDoc->createElement("editora");
@@ -145,12 +147,26 @@ function getDadosNLivros() {
                     }
                 }
                 // Acrescentar link para imagem
-                $linkImg = $dal->getUrlImgLivro($isbn);
-                if ($linkImg) {
-                    $tagLinkImg = $xmlDoc->createElement("cover");
-                    $tagTxtNodeLinkImg = $xmlDoc->createTextNode($linkImg);
-                    $tagLinkImg->appendChild($tagTxtNodeLinkImg);
-                    $newTagBook->appendChild($tagLinkImg);
+                $test = $arrLinksImg[$isbn];
+                if ($test != null) {
+                    $linkImg = $arrLinksImg[$isbn];
+                    if ($linkImg) {
+                        $tagLinkImg = $xmlDoc->createElement("cover");
+                        $tagTxtNodeLinkImg = $xmlDoc->createTextNode($linkImg);
+                        $tagLinkImg->appendChild($tagTxtNodeLinkImg);
+                        $newTagBook->appendChild($tagLinkImg);
+                    }
+                } else {
+                    $linkImg = $dal->getUrlImgLivro($isbn);
+                    if ($linkImg) {
+                        $tagLinkImg = $xmlDoc->createElement("cover");
+                        $tagTxtNodeLinkImg = $xmlDoc->createTextNode($linkImg);
+                        $tagLinkImg->appendChild($tagTxtNodeLinkImg);
+                        $newTagBook->appendChild($tagLinkImg);
+                        $arrLinksImg[$isbn] = $linkImg;
+                    }else{
+                        $arrLinksImg[$isbn] = "Imagem indisponivel";
+                    }
                 }
             }
         }

@@ -22,7 +22,7 @@ function MakeXMLHTTPCallLivrosPorCategoria(categoria)
     if (xmlHttpObj)
     {
         // Definição do URL para efectuar pedido HTTP - método GET
-        xmlHttpObj.open("GET", "AJAX/PedidosHTTP.php?idPedido=5&categoria="+categoria, true);
+        xmlHttpObj.open("GET", "AJAX/PedidosHTTP.php?idPedido=5&categoria=" + categoria, true);
 
         // Registo do EventHandler
         xmlHttpObj.onreadystatechange = stateHandlerLivrosPorCategoria;
@@ -35,8 +35,7 @@ function stateHandlerLivrosPorCategoria()
     if (xmlHttpObj.readyState == 4 && xmlHttpObj.status == 200)
     {
         var xml = xmlHttpObj.responseXML;
-		creteMiddleSection(xml);
-        //TRATAMENTO DE XML PARA INSERIR OS LIVROS PESQUISADOS NA PÁGINA
+        creteMiddleSection(xml);
         /*
          * FORMATO XML
          * <editoras>
@@ -55,7 +54,7 @@ function stateHandlerLivrosPorCategoria()
          * </editoras> 
          * 
          */
-        
+
     }
 }
 

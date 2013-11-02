@@ -36,7 +36,6 @@ function stateHandlerNew()
     if (xmlHttpObj.readyState == 4 && xmlHttpObj.status == 200)
     {
         var text = xmlHttpObj.responseText;
-        //preencheSelectCategorias(xml);
         preencheSelectCategorias(text)
     }
 }
