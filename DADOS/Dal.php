@@ -114,6 +114,7 @@ class Dal {
                     $txtNodeIsbn = $livro->createTextNode($objJson->book[0]->isbn);
                     $tagIsbn->appendChild($txtNodeIsbn);
                     $tagBook->appendChild($tagIsbn);
+                    $isbn = $book[0]->isbn;
 
                     $tagPublicacao = $livro->createElement("publicacao");
                     $txtNodePublicacao = $livro->createTextNode($objJson->book[0]->publicacao);
@@ -142,8 +143,6 @@ class Dal {
 
 
                     // Acrescentar o link da capa do livro ao XML
-                    $isbn = $livro->getElementsByTagName("isbn")->item(0)->nodeValue;
-
                     $linkCover = $dal->getUrlImgLivro($isbn);
                     if ($linkCover) {
                         $nodeBook = $livro->getElementsByTagName("book")->item(0);
@@ -271,7 +270,7 @@ class Dal {
     }
 
     private function getArrayJsonByIsbn($isbn) {
-        $link = "https://www.googleapis.com/books/v1/volumes?q=isbn:" . $isbn;
+        $link = "https://www.googleapis.com/books/v1/volumes?q=isbn:" . $isbn .  "&key=AIzaSyATOCr1deBCf9xY_2JDp7U1UXb_l1X4LSA";
         $txtJson = file_get_contents($link);
         $arrJson = json_decode($txtJson, true);
         return $arrJson;
@@ -317,4 +316,5 @@ class Dal {
     }
 
 }
+
 ?>
