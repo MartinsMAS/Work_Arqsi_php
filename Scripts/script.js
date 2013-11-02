@@ -23,7 +23,9 @@ function inicializar() {
 }
 
 function loadLivros() {
-	MakeXMLHTTPCallLivrosPorCategoria("Romance");
+	var x=document.getElementById("comboCategorias").selectedIndex;
+	var y=document.getElementById("comboCategorias").options;
+	MakeXMLHTTPCallLivrosPorCategoria(y[x].text);
 }
 
 function createCategorias() {
@@ -161,13 +163,34 @@ function createEditora() {
 
 }
 
-function createTitleDiv() {
-
+function createTitleDiv(titulo) {
+	
+	div = document.createElement("div");
+	
+	divback = document.createElement("div");
+	divback.setAttribute("class","divComDivDivisoria");
+	divup = document.createElement("div");
+	divup.setAttribute("class","divDivisoria");
+	
+	texto = document.createTextNode(titulo);
+	
+	span = document.createElement("span");
+	span.setAttribute("text-align","center");
+	span.setAttribute("valing","center");
+	span.setAttribute("class","textoRolantePopUp");
+	
+	span.appendChild(texto);
+	divup.appendChild(span);
+	divback.appendChild(divup);
+	
+	div.appendChild(divback);
+	
+	return div;
 }
 
 function creteMiddleSection(xml) {
     elementDiv = document.getElementById("middle");
-    //elementDiv.innerHTML="";
+    elementDiv.innerHTML="";
 
     resultadoPesquisa = document.createElement("div");
 
@@ -178,9 +201,13 @@ function creteMiddleSection(xml) {
 		divCategoria = document.createElement("div");
 		divCategoria.setAttribute("id", "divisoriaPesquisa");
 		divCategoria.setAttribute("class", "divisoriaPesquisa");
-		//tabelaDivisoria = createDivisoria();
-		//divCategoria.appendChild(tabelaDivisoria);
-		//resultadoPesquisa.appendChild(divCategoria);
+		
+		//temp=editoras.getElementsByTagName("editora")[i];
+		var title = editoras[i].getAttribute("name");
+
+		tabelaDivisoria = createTitleDiv(title);
+		divCategoria.appendChild(tabelaDivisoria);
+		resultadoPesquisa.appendChild(divCategoria);
 		
 		var books = editoras[i].getElementsByTagName("book");
 		
@@ -205,27 +232,76 @@ function requestInformationPopUp(titulo) {
 
 function preencheDivPopUp(xml) {
 
-       var title = xml.getElementsByTagName("title")[0].childNodes[0].nodeValue;
+	divPrincipal = document.getElementById("inline1");
+	divPrincipal.innerHTML = "";
+	
+    var title = xml.getElementsByTagName("title")[0].childNodes[0].nodeValue;
     var author = xml.getElementsByTagName("author")[0].childNodes[0].nodeValue;
     var category = xml.getElementsByTagName("category")[0].childNodes[0].nodeValue;
     var isbn = xml.getElementsByTagName("isbn")[0].childNodes[0].nodeValue;
+	var anopub = xml.getElementsByTagName("publicacao")[0].childNodes[0].nodeValue;
     var news = xml.getElementsByTagName("news")[0].childNodes[0].nodeValue;
+	
+	try{
+        var image = xml.getElementsByTagName("cover")[0].childNodes[0].nodeValue;
+    }catch (err){
+        var image = false;
+    }
+	
+	try{
+        var synopse = xml.getElementsByTagName("sinopse")[0].childNodes[0].nodeValue;
+    }catch (err){
+        var synopse = false;
+    }
+	
+    
+	
+	
 
-    pTitle = document.createElement("p");
+    t = document.createElement("table");
+    tb = document.createElement("tbody");
+    tr1 = document.createElement("tr");
+    tr2 = document.createElement("tr");
+    tr3 = document.createElement("tr");
+	tr4 = document.createElement("tr");
+	tr5 = document.createElement("tr");
+	tr6 = document.createElement("tr");
+	tr7 = document.createElement("tr");
+	tr8 = document.createElement("tr");
+    td1 = document.createElement("td");
+    td2 = document.createElement("td");
+    td3 = document.createElement("td");
+    td4 = document.createElement("td");
+    td5 = document.createElement("td");
+	td6 = document.createElement("td");
+	td7 = document.createElement("td");
+	td8 = document.createElement("td");
+	td9 = document.createElement("td");
+    
+	t.setAttribute("class","tabelaInsidePopUp");
+	td1.setAttribute("colspan","2");td1.setAttribute("class","titulo");td1.setAttribute("id","titulo");
+	td2.setAttribute("width","180");td2.setAttribute("class","autor");td2.setAttribute("id","autor");
+	td3.setAttribute("width","200");td3.setAttribute("class","imagem");td3.setAttribute("id","imagem");
+	td3.setAttribute("rowspan","4");
+	td4.setAttribute("class","categoria");td4.setAttribute("id","categoria");
+	td5.setAttribute("class","isbn");td5.setAttribute("id","isbn");
+	td6.setAttribute("colspan","2");td6.setAttribute("class","textoRolante");td6.setAttribute("id","textoRolante");
+	td7.setAttribute("colspan","2");td7.setAttribute("class","sinopse");td7.setAttribute("id","sinopse");
+	td8.setAttribute("colspan","2");td8.setAttribute("class","impressora");td8.setAttribute("id","impressora");
+	
+	
     txtNodeTitle = document.createTextNode(title);
-	labelNodeTitle = document.createTextNode("Título: ");
-	spanLabelTitle = document.createElement("span");
+	//labelNodeTitle = document.createTextNode("Título: ");
+	//spanLabelTitle = document.createElement("span");
 	spanTextTitle = document.createElement("span");
-	spanLabelTitle.setAttribute("class","textoLabelPopUp");
+	//spanLabelTitle.setAttribute("class","textoLabelPopUp");
 	spanTextTitle.setAttribute("class","textoTituloPopUp");
-	spanLabelTitle.appendChild(labelNodeTitle);
+	//spanLabelTitle.appendChild(labelNodeTitle);
 	spanTextTitle.appendChild(txtNodeTitle);
-	pTitle.appendChild(spanLabelTitle);
-    pTitle.appendChild(spanTextTitle);
-    divPrincipal.appendChild(pTitle);
+	//td1.appendChild(spanLabelTitle);
+    td1.appendChild(spanTextTitle);
 
 	
-    pAuthor = document.createElement("p");
     txtNodeAuthor = document.createTextNode(author);
 	labelNodeAuthor = document.createTextNode("Autor: ");
 	spanLabelAutor = document.createElement("span");
@@ -234,13 +310,10 @@ function preencheDivPopUp(xml) {
 	spanTextAutor.setAttribute("class","textoAtributosPopUp");
 	spanLabelAutor.appendChild(labelNodeAuthor);
 	spanTextAutor.appendChild(txtNodeAuthor);
-    pAuthor.appendChild(spanLabelAutor);
-	pAuthor.appendChild(spanTextAutor);
-    divPrincipal.appendChild(pAuthor);
+    td2.appendChild(spanLabelAutor);
+	td2.appendChild(spanTextAutor);
 
 	
-	
-    pCategory = document.createElement("p");
     txtNodeCategory = document.createTextNode(category);
 	labelNodeCategory = document.createTextNode("Categoria: ");
 	spanLabelCategory = document.createElement("span");
@@ -249,11 +322,9 @@ function preencheDivPopUp(xml) {
 	spanTextCategory.setAttribute("class","textoAtributosPopUp");
 	spanLabelCategory.appendChild(labelNodeCategory);
 	spanTextCategory.appendChild(txtNodeCategory);
-    pCategory.appendChild(spanLabelCategory);
-	pCategory.appendChild(spanTextCategory);
-    divPrincipal.appendChild(pCategory);
+    td4.appendChild(spanLabelCategory);
+	td4.appendChild(spanTextCategory);
 
-    pIsbn = document.createElement("p");
     txtNodeIsbn = document.createTextNode(isbn);
 	labelNodeIsbn = document.createTextNode("ISBN: ");
 	spanLabelIsbn = document.createElement("span");
@@ -262,9 +333,19 @@ function preencheDivPopUp(xml) {
 	spanTextIsbn.setAttribute("class","textoAtributosPopUp");
 	spanLabelIsbn.appendChild(labelNodeIsbn);
 	spanTextIsbn.appendChild(txtNodeIsbn);
-    pIsbn.appendChild(spanLabelIsbn);
-	pIsbn.appendChild(spanTextIsbn);
-    divPrincipal.appendChild(pIsbn);
+    td5.appendChild(spanLabelIsbn);
+	td5.appendChild(spanTextIsbn);
+	
+	txtNodeAnoPub = document.createTextNode(anopub);
+	labelNodeAnoPub = document.createTextNode("Ano Publicação: ");
+	spanLabelAnoPub = document.createElement("span");
+	spanTextAnoPub = document.createElement("span");
+	spanLabelAnoPub.setAttribute("class","textoLabelPopUp");
+	spanTextAnoPub.setAttribute("class","textoAtributosPopUp");
+	spanLabelAnoPub.appendChild(labelNodeAnoPub);
+	spanTextAnoPub.appendChild(txtNodeAnoPub);
+    td9.appendChild(spanLabelAnoPub);
+	td9.appendChild(spanTextAnoPub);
 
     
     txtNodeNews = document.createTextNode(news);
@@ -279,9 +360,64 @@ function preencheDivPopUp(xml) {
 		span.appendChild(text);
 		marquee.appendChild(span);
 		divNews.appendChild(marquee);
-		divPrincipal.appendChild(divNews);
+		td6.appendChild(divNews);
 	}
+	
+	if(synopse){
+		txtNodeSinopse = document.createTextNode(synopse);
+    }else{
+		txtNodeSinopse = document.createTextNode("(Sem sinopse disponivel)");
+    }
+	
+	labelNodeSinopse = document.createTextNode("Sinopse: ");
+	spanLabelSinopse = document.createElement("span");
+	spanTextSinopse = document.createElement("span");
+	spanLabelSinopse.setAttribute("class","textoLabelPopUp");
+	spanTextSinopse.setAttribute("class","tabelaInsidePopUpSinopse");
+	spanLabelSinopse.appendChild(labelNodeSinopse);
+	spanTextSinopse.appendChild(txtNodeSinopse);
+	td7.appendChild(spanLabelSinopse);
+	td7.appendChild(spanTextSinopse); 
+	
     
+    
+	img = document.createElement("img");
+	if(image){
+       img.setAttribute("src", image); 
+    }else{
+       img.setAttribute("src", "img/logo.png");  
+    }
+	img.setAttribute("width", "150");
+	img.setAttribute("height", "200");
+	img.setAttribute("class","imagemTituloPopUp");
+	//img.setAttribute("src",image);
+	spanImagem = document.createElement("span");
+	spanImagem.setAttribute("class","spanImagemTituloPopUp");
+	spanImagem.appendChild(img);
+    td3.appendChild(spanImagem);
+	
+	tr1.appendChild(td1);
+	tr2.appendChild(td2);
+	tr2.appendChild(td3);
+	tr3.appendChild(td4);
+	tr4.appendChild(td5);
+	tr8.appendChild(td9);
+	tr5.appendChild(td6);
+	tr6.appendChild(td7);
+	tr7.appendChild(td8);
+	
+	tb.appendChild(tr1);
+	tb.appendChild(tr2);
+	tb.appendChild(tr3);
+	tb.appendChild(tr4);
+	tb.appendChild(tr8);
+	tb.appendChild(tr5);
+	tb.appendChild(tr6);
+	tb.appendChild(tr7);
+	
+	t.appendChild(tb);
+	
+	divPrincipal.appendChild(t);
 
 }
 
@@ -290,6 +426,12 @@ function createTableBook(xml) {
 	var title = xml.getElementsByTagName("title")[0].childNodes[0].nodeValue;
     var author = xml.getElementsByTagName("author")[0].childNodes[0].nodeValue;
     var category = xml.getElementsByTagName("category")[0].childNodes[0].nodeValue;
+	try{
+        var image = xml.getElementsByTagName("cover")[0].childNodes[0].nodeValue;
+    }catch (err){
+        var image = false;
+    }
+	
 	//var image = xml.getElementsByTagName("cover")[0].childNodes[0].nodeValue;
 
     tabelaLivroDiv = document.createElement("div");
@@ -336,8 +478,13 @@ function createTableBook(xml) {
 
 	//METER ISTO A RECEBER OS VALORES PASSADOS Á FUNÇAO
     img.setAttribute("class", "imagemCapaLivroTabelaLivros");
-    img.setAttribute("src", "img/logo.jpg");
+    //img.setAttribute("src", "img/logo.jpg");
 	//img.setAttribute("src", image);
+	if(image){
+       img.setAttribute("src", image); 
+    }else{
+       img.setAttribute("src", "img/logo.png");  
+    }
 	
     td1.setAttribute("id", "imagemCapaLivro");
     td1.setAttribute("class", "imagemCapaLivro");

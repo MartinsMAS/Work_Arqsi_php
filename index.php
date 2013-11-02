@@ -243,7 +243,7 @@
 		<div id="middle" class="middle">
 			
 		</div>
-		
+		 
 		
 		
 		<div id="bottom" class="bottom">
@@ -257,7 +257,7 @@
 				</a>
 			</div>	
 				
-			<div id="inline1" name="inline1" style="width:400px; height:250px; display: none;">
+			<div id="inline1" name="inline1" style="width:500px; height:500px; display: none;">
 				
 			</div>
 				

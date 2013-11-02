@@ -10,6 +10,20 @@
                         background-image:url(sections/mid.png);
                         text-align: center;
                 }
+				
+				.divDivisoria{
+                        width: 450px;
+                        height: 30px;
+                        background-image:url(sections/title3.png);
+                        text-align: center;
+                }
+				
+				.divComDivDivisoria{
+                        width: 450px;
+                        height: 30px;
+                        background-image:url(sections/backTitle.png);
+                        text-align: center;
+                }
                 
                 .bottom{
                         width: 450px;
@@ -155,6 +169,7 @@
 				.textoTituloPopUp{
 					font-weight: bold;
 					font-style: italic;
+					text-align: center;
 				}
 				
 				.textoAtributosPopUp{
@@ -167,4 +182,20 @@
 					color: #00F;
 				}
 				
+				.tabelaInsidePopUp{
+					width: 400px;
+					border: 0px; 
+					cellspacing: 3px;
+					table-layout:fixed;
+				}
 				
+				.tabelaInsidePopUpSinopse{
+                    font-family: 'Courier New', Courier, monospace;
+                    font-size: 14px;
+                    text-align: justify;
+				}
+				
+				.spanImagemTituloPopUp{
+					align: right;
+					text-align: right;
+				}
