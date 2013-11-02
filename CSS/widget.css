@@ -79,13 +79,18 @@
                 }
 				
 				.editoras{
-                        width: 220px;
+                        width: 200px;
                         text-align: left;                        
                 }
                 
                 .showNResults{
-                        width: 150px;
+                        width: 130px;
                         text-align: right;
+                }
+				
+				.pesquisarEditoras{
+                        text-align: center;
+						right : 20px;
                 }
                 
                 .tabelaLivroDiv{

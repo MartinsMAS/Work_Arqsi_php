@@ -22,10 +22,14 @@ function inicializar() {
     //MakeXMLHTTPCallLivrosPorCategoria("Romance");
 }
 
-function loadLivros() {
+function loadLivrosCategorias() {
 	var x=document.getElementById("comboCategorias").selectedIndex;
 	var y=document.getElementById("comboCategorias").options;
 	MakeXMLHTTPCallLivrosPorCategoria(y[x].text);
+}
+
+function loadLivrosEditoras(){
+	MakeXMLHTTPCallNLivrosPorEditora(6);
 }
 
 function createCategorias() {
@@ -62,7 +66,7 @@ function createCategorias() {
     select1.setAttribute("id", "comboCategorias");
     select1.setAttribute("class", "comboCategorias");
     select1.setAttribute("size", "1");
-    select1.setAttribute("onChange", "loadLivros();");
+    select1.setAttribute("onChange", "loadLivrosEditoras();");
 
     td2.setAttribute("id", "showNResults");
     td2.setAttribute("class", "showNResults");
@@ -70,7 +74,7 @@ function createCategorias() {
     select2.setAttribute("id", "comboShowNResults");
     select2.setAttribute("class", "comboShowNResults");
     select2.setAttribute("size", "1");
-    select2.setAttribute("onChange", "loadLivros();");
+    select2.setAttribute("onChange", "loadLivrosCategorias();");
 
     optionS.setAttribute("selected", "selected");
     optionS.setAttribute("value", "none");
@@ -116,12 +120,18 @@ function createEditora() {
     tr = document.createElement("tr");
     td1 = document.createElement("td");
     td2 = document.createElement("td");
+	td3 = document.createElement("td");
     text1 = document.createTextNode("Nº Resultados Editora: ");
     input1 = document.createElement("input");
-    text2 = document.createTextNode("Resultados por Pagina: ");
+    text2 = document.createTextNode("Results por Pagina: ");
     input2 = document.createElement("input");
     div = document.createElement("div");
-
+	
+	img = document.createElement("img");
+	img.setAttribute("src","img/search.png");
+	img.setAttribute("width","20");
+	img.setAttribute("height","20");
+	
     div.setAttribute("id", "formChosses");
     div.setAttribute("class", "formChosses");
 
@@ -134,7 +144,7 @@ function createEditora() {
     input1.setAttribute("class", "nLivrosEditora");
     input1.setAttribute("type", "text");
     input1.setAttribute("name", "nLivrosEditora");
-    input1.setAttribute("size", "3");
+    input1.setAttribute("size", "2");
 
     td2.setAttribute("id", "showNResultsPage");
     td2.setAttribute("class", "showNResultsPage");
@@ -143,15 +153,20 @@ function createEditora() {
     input2.setAttribute("class", "showNResultsPage");
     input2.setAttribute("type", "text");
     input2.setAttribute("name", "showNResultsPage");
-    input2.setAttribute("size", "3");
-
+    input2.setAttribute("size", "2");
+	
+	td3.setAttribute("id", "search");
+    td3.setAttribute("class", "pesquisarEditoras");
+	img.setAttribute("onClick", "loadLivrosEditoras();");
 
     td1.appendChild(text1);
     td1.appendChild(input1);
+	td3.appendChild(img);
     td2.appendChild(text2);
     td2.appendChild(input2);
 
     tr.appendChild(td1);
+	tr.appendChild(td3);
     tr.appendChild(td2);
 
     tb.appendChild(tr);
