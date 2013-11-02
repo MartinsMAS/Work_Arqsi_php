@@ -219,13 +219,26 @@ class Dal {
         $vetCategorias = array();
         $xmlCat = new DOMDocument();
         $xmlCat->load($linkEditora);
-
-        $categorias = $xmlCat->getElementsByTagName('categorias')->item(0)->childNodes;
-        foreach ($categorias AS $categoria) {
-            $textCat = $categoria->nodeValue;
-            $vetCategorias[] = $textCat;
+        if ($xmlCat->textContent != "") {
+            $categorias = $xmlCat->getElementsByTagName('categorias')->item(0)->childNodes;
+            foreach ($categorias AS $categoria) {
+                $textCat = $categoria->nodeValue;
+                $vetCategorias[] = $textCat;
+            }
+            return $vetCategorias;
+        } else {
+            try {
+                $txtJson = file_get_contents($linkEditora);
+                $objJson = json_decode($txtJson);
+                $categorias = $objJson->categorys;
+                foreach ($categorias AS $categoria) {
+                    $vetCategorias[] = $categoria->category;
+                }
+                return $vetCategorias;
+            } catch (Exception $e) {
+                return false;
+            }
         }
-        return $vetCategorias;
     }
 
     /* Carrega array de editoras */
