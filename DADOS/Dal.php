@@ -82,48 +82,93 @@ class Dal {
         }
         $titulo = str_replace(" ", "+", $titulo);
         /* Ciclo que pesquisa em todas as editoras se encontra o livro, na primeira que encontre retorna o conteudo do livro. Se não encontra em nenhuma retorna falso */
-        foreach ($this->editoras AS $editora) {
-            try {
-                $livro = new DOMDocument();
-                $linkEditora = $editora->getLink() . "?titulo=$titulo";
-                // $linkFinal = urlencode($linkEditora);
-                $html = file_get_contents($linkEditora);
-                $livro->loadHTML($html);
+        foreach ($this->editoras AS $editora)
+            if ($editora->getMetodo() == "json") {
+                try {
+                    $livro = new DOMDocument();
+                    $linkEditora = $editora->getLink() . "?titulo=$titulo";
+                    $txtJson = file_get_contents($linkEditora);
+                    $objJson = json_decode($txtJson);
 
-                $dal = new Dal();
+                    //Criação do xml de retorno
+                    $livro = new DOMDocument();
 
-                // Acrescentar o link da capa do livro ao XML
-                $isbn = $livro->getElementsByTagName("isbn")->item(0)->nodeValue;
+                    $tagBook = $livro->createElement("book");
 
-                $linkCover = $dal->getUrlImgLivro($isbn);
-                if ($linkCover) {
-                    $nodeBook = $livro->getElementsByTagName("book")->item(0);
-                    $nodeLinkImg = $livro->createElement("cover");
-                    $nodeTxtLinkImg = $livro->createTextNode($linkCover);
-                    $nodeLinkImg->appendChild($nodeTxtLinkImg);
-                    $nodeBook->appendChild($nodeLinkImg);
-                }
+                    $tagTitle = $livro->createElement("title");
+                    $txtNodeTitle = $livro->createTextNode($objJson->book[0]->title);
+                    $tagTitle->appendChild($txtNodeTitle);
+                    $tagBook->appendChild($tagTitle);
 
-                // Acrescentar a sinopse ao XML
-                $strSinopse = $dal->getSinopseLivro($isbn);
-                if ($strSinopse) {
-                    $nodeBook = $livro->getElementsByTagName("book")->item(0);
-                    $nodeSinopse = $livro->createElement("sinopse");
-                    $nodeTxtSinopse = $livro->createTextNode($strSinopse);
-                    $nodeSinopse->appendChild($nodeTxtSinopse);
-                    $nodeBook->appendChild($nodeSinopse);
-                }
+                    $tagAuthor = $livro->createElement("author");
+                    $txtNodeAuthor = $livro->createTextNode($objJson->book[0]->author);
+                    $tagAuthor->appendChild($txtNodeAuthor);
+                    $tagBook->appendChild($tagAuthor);
 
+                    $tagCategory = $livro->createElement("category");
+                    $txtNodeCategory = $livro->createTextNode($objJson->book[0]->category);
+                    $tagCategory->appendChild($txtNodeCategory);
+                    $tagBook->appendChild($tagCategory);
 
+                    $tagIsbn = $livro->createElement("isbn");
+                    $txtNodeIsbn = $livro->createTextNode($objJson->book[0]->isbn);
+                    $tagIsbn->appendChild($txtNodeIsbn);
+                    $tagBook->appendChild($tagIsbn);
 
+                    $tagPublicacao = $livro->createElement("publicacao");
+                    $txtNodePublicacao = $livro->createTextNode($objJson->book[0]->publicacao);
+                    $tagPublicacao->appendChild($txtNodePublicacao);
+                    $tagBook->appendChild($tagPublicacao);
 
-                if ($livro->getElementsByTagName("book")->item(0)) {
+                    $tagNews = $livro->createElement("news");
+                    $txtNodeNews = $livro->createTextNode($objJson->book[0]->news);
+                    $tagNews->appendChild($txtNodeNews);
+                    $tagBook->appendChild($tagNews);
+
+                    $livro->appendChild($tagBook);
                     return $livro->saveXML();
+                } catch (Exception $e) {
+                    return false;
                 }
-            } catch (Exception $e) {
-                continue;
+            } else {
+                try {
+                    $livro = new DOMDocument();
+                    $linkEditora = $editora->getLink() . "?titulo=$titulo";
+                    // $linkFinal = urlencode($linkEditora);
+                    $html = file_get_contents($linkEditora);
+                    $livro->loadHTML($html);
+
+                    $dal = new Dal();
+
+
+                    // Acrescentar o link da capa do livro ao XML
+                    $isbn = $livro->getElementsByTagName("isbn")->item(0)->nodeValue;
+
+                    $linkCover = $dal->getUrlImgLivro($isbn);
+                    if ($linkCover) {
+                        $nodeBook = $livro->getElementsByTagName("book")->item(0);
+                        $nodeLinkImg = $livro->createElement("cover");
+                        $nodeTxtLinkImg = $livro->createTextNode($linkCover);
+                        $nodeLinkImg->appendChild($nodeTxtLinkImg);
+                        $nodeBook->appendChild($nodeLinkImg);
+                    }
+
+                    // Acrescentar a sinopse ao XML
+                    $strSinopse = $dal->getSinopseLivro($isbn);
+                    if ($strSinopse) {
+                        $nodeBook = $livro->getElementsByTagName("book")->item(0);
+                        $nodeSinopse = $livro->createElement("sinopse");
+                        $nodeTxtSinopse = $livro->createTextNode($strSinopse);
+                        $nodeSinopse->appendChild($nodeTxtSinopse);
+                        $nodeBook->appendChild($nodeSinopse);
+                    }
+                    if ($livro->getElementsByTagName("book")->item(0)) {
+                        return $livro->saveXML();
+                    }
+                } catch (Exception $e) {
+                    continue;
+                }
             }
-        }
         return false;
     }
 
@@ -141,73 +186,6 @@ class Dal {
             $load = file_get_contents($link);
             $strFinal = $strFinal . $load;
             $strFinal = $strFinal . "</editora>";
-
-            /*
-              // Colocação da tag editora com o seu nome
-              $newTagEditora = $livros->createElement("editora");
-              $newTagEditora->setAttribute("name", $editora->getNome());
-              $editorasElem->appendChild($newTagEditora);
-
-              $link = $editora->getLink() . "?numero=$n";
-              $load = $load . file_get_contents($link);
-              $loadHTML = new DOMDocument();
-              $loadHTML->loadHTML($load);
-
-              $tagBook = $loadHTML->getElementsByTagName("book");
-              foreach ($tagBook AS $book) {
-
-              // criar a nova tag book e inserir dentro da editora
-              $newTagBook = $livros->createElement("book");
-              $newTagEditora->appendChild($newTagBook);
-
-              $childsBook = $book->childNodes;
-              foreach ($childsBook AS $child) {
-              $tagName = $child->nodeName;
-              switch ($tagName) {
-              case 'title':
-              $node = $livros->createElement("title");
-              $nodeText = $livros->createTextNode($child->nodeValue);
-              $node->appendChild($nodeText);
-              $newTagBook->appendChild($node);
-              break;
-              case 'author':
-              $node = $livros->createElement("author");
-              $nodeText = $livros->createTextNode($child->nodeValue);
-              $node->appendChild($nodeText);
-              $newTagBook->appendChild($node);
-              break;
-              case 'category':
-              $node = $livros->createElement("category");
-              $nodeText = $livros->createTextNode($child->nodeValue);
-              $node->appendChild($nodeText);
-              $newTagBook->appendChild($node);
-              break;
-              case 'isbn':
-              $node = $livros->createElement("isbn");
-              $nodeText = $livros->createTextNode($child->nodeValue);
-              $node->appendChild($nodeText);
-              $newTagBook->appendChild($node);
-              break;
-              case 'publicacao':
-              $node = $livros->createElement("publicacao");
-              $nodeText = $livros->createTextNode($child->nodeValue);
-              $node->appendChild($nodeText);
-              $newTagBook->appendChild($node);
-              break;
-              case 'news':
-              $node = $livros->createElement("news");
-              $nodeText = $livros->createTextNode($child->nodeValue);
-              $node->appendChild($nodeText);
-              $newTagBook->appendChild($node);
-              break;
-              }
-              }
-              }
-              }
-              //$retorno = $livros->saveXML();
-              return $livros->saveHTML();
-             * 
-             */
         }
         $strFinal = $strFinal . "</editoras>";
         return $strFinal;
@@ -257,8 +235,9 @@ class Dal {
         foreach ($editoras AS $editora) {
             $nome = $editora->childNodes->item(0)->nodeValue;
             $link = $editora->childNodes->item(1)->nodeValue;
+            $metodo = $editora->childNodes->item(2)->nodeValue;
             $obj;
-            $this->editoras[] = new Editora($nome, $link);
+            $this->editoras[] = new Editora($nome, $link, $metodo);
         }
     }
 
@@ -338,5 +317,4 @@ class Dal {
     }
 
 }
-
 ?>
