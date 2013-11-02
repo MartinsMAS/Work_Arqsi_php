@@ -29,7 +29,7 @@ function loadLivrosCategorias() {
 }
 
 function loadLivrosEditoras(){
-//ALTERAR ESTA MERDA!!
+	//ALTERAR ESTA MERDA!!
 	//var x=document.getElementById("comboCategorias").selectedIndex;
 	//var y=document.getElementById("comboCategorias").options;
 	MakeXMLHTTPCallNLivros(6);
@@ -69,7 +69,7 @@ function createCategorias() {
     select1.setAttribute("id", "comboCategorias");
     select1.setAttribute("class", "comboCategorias");
     select1.setAttribute("size", "1");
-    select1.setAttribute("onChange", "loadLivrosEditoras();");
+    select1.setAttribute("onChange", "loadLivrosCategorias();");
 
     td2.setAttribute("id", "showNResults");
     td2.setAttribute("class", "showNResults");
