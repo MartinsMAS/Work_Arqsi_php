@@ -29,7 +29,10 @@ function loadLivrosCategorias() {
 }
 
 function loadLivrosEditoras(){
-	MakeXMLHTTPCallNLivrosPorEditora(6);
+//ALTERAR ESTA MERDA!!
+	//var x=document.getElementById("comboCategorias").selectedIndex;
+	//var y=document.getElementById("comboCategorias").options;
+	MakeXMLHTTPCallNLivros(6);
 }
 
 function createCategorias() {
