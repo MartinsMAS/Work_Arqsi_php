@@ -36,7 +36,8 @@ function stateHandlerNLivros()
     if (xmlHttpObj.readyState == 4 && xmlHttpObj.status == 200)
     {
         var xml = xmlHttpObj.responseXML;
-        alert();
+        creteMiddleSection(xml);
+        
 /*
         // A criar função de tratamento conversão de string recebida para xml
         //var $doc = new DOMParser().parseFromString(xml, "text/html");
