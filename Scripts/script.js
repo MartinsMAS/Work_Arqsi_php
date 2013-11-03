@@ -1,11 +1,3 @@
-function init() {
-    MakeXMLHTTPCallNLivros(6);
-}
-
-function loadCategorias() {
-    //alert("Carreguei Categorias!!!!");
-}
-
 function inicializar() {
     var selectEscolha = document.getElementById("comboSelect");
     //var valorSelect = selectEscolha.options[selectEscolha.selectedIndex].text;
@@ -33,15 +25,21 @@ function inicializar() {
 }
 
 function loadLivrosCategorias() {
-    elementDiv = document.getElementById("middle");
+
+	elementDiv = document.getElementById("middle");
     elementDiv.innerHTML = "";
 
     elementPaging = document.getElementById("paging");
     elementPaging.style.display = "none";
     elementPaging.innerHTML = "";
-
-    var x = document.getElementById("comboCategorias").selectedIndex;
+	
+	var x = document.getElementById("comboCategorias").selectedIndex;
     var y = document.getElementById("comboCategorias").options;
+    var cat = y[x].value;
+
+    if (cat == "none") {
+		return;
+    }	
 
     divWaiting = document.createElement("div");
     divWaiting.setAttribute("class", "loadingInformation");
@@ -328,7 +326,7 @@ function creteMiddleSection(xml) {
         var nPtxt = y[x].text;
 
         if (nPtxt == "none") {
-            var nP = 100; //Dafault
+            var nP = 100; //Default
         } else {
             var nP = Number(nPtxt);
         }
