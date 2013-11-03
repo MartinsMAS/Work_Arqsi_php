@@ -211,13 +211,37 @@ function createTitleDiv(titulo) {
 }
 
 function creteMiddleSection(xml) {
+	var livros = xml.getElementsByTagName("book");
+	var numPaginas;
+	//if(livros.lenght % 2 == 0){
+	//	numPaginas = livros.length / 3;
+	//}else{
+	//	numPaginas = livros.length / 3 + 1;
+	//}
+	
+	//var divisoes = new Array(numPaginas);
+	
+	var divisoes = new Array();
+	
     elementDiv = document.getElementById("middle");
     elementDiv.innerHTML="";
+	
+	linkContainer = document.getElementById("paging");
+	linkContainer.innerHTML="";
+	
+	//paging = document.getElementById("showNResultsPage");
+	//paging = document.getElementById("comboShowNresults");
+	paging=3;
+	flag = 0;
+	pagPrenchidas = 0;
 
     resultadoPesquisa = document.createElement("div");
-
+	resultadoPesquisa.setAttribute("id","all");
+	
 	var editoras = xml.getElementsByTagName("editora");
 	
+	var divTemp = document.createElement("div");
+	divTemp.setAttribute("class","divTemp");
 	
 	for (i = 0; i < editoras.length; i++) {
 		divCategoria = document.createElement("div");
@@ -229,21 +253,47 @@ function creteMiddleSection(xml) {
 
 		tabelaDivisoria = createTitleDiv(title);
 		divCategoria.appendChild(tabelaDivisoria);
-		resultadoPesquisa.appendChild(divCategoria);
+		divTemp.appendChild(divCategoria);
 		
 		var books = editoras[i].getElementsByTagName("book");
 		
 		for (j = 0; j < books.length; j++) {
+			if(paging==flag){
+				//divTemp2 = document.createElement("div");
+				//divTemp2 = divTemp;
+				//resultadoPesquisa.appendChild(divTemp2);
+				divisoes[pagPrenchidas] = divTemp;
+				pagPrenchidas++;
+				var divTemp = document.createElement("div");
+				divTemp.setAttribute("class","divTemp");
+				flag=0;
+				
+				divCategoria = document.createElement("div");
+				divCategoria.setAttribute("id", "divisoriaPesquisa");
+				divCategoria.setAttribute("class", "divisoriaPesquisa");
+				var title = editoras[i].getAttribute("name");
+
+				tabelaDivisoria = createTitleDiv(title);
+				divCategoria.appendChild(tabelaDivisoria);
+				divTemp.appendChild(divCategoria);
+			}
 			tabelaLivro = createTableBook(books[j]);
 			divTeste = document.createElement("div");
-			divTeste.setAttribute("id", "resultadoPesquisa");
-			divTeste.setAttribute("class", "resultadoPesquisa");
+			divTeste.setAttribute("id", "temporario");
+			divTeste.setAttribute("class", "temporario");
 			divTeste.appendChild(tabelaLivro);
-			resultadoPesquisa.appendChild(divTeste);
+			divTemp.appendChild(divTeste);
+			flag++;
 		}
     }
-
-    elementDiv.appendChild(resultadoPesquisa);
+	divisoes[pagPrenchidas] = divTemp;
+	for(x = 0; x < divisoes.length; x++){
+		resultadoPesquisa.appendChild(divisoes[x]);
+	}
+	
+	elementDiv.appendChild(resultadoPesquisa);
+	createLinks();
+    
 }
 
 function requestInformationPopUp(titulo) {
@@ -550,4 +600,50 @@ function createTableBook(xml) {
     tabelaLivroDiv.appendChild(t);
 
     return tabelaLivroDiv;
+}
+
+
+function createCallback(div) {
+        return function () {
+            hideAllDivs();
+            div.style.display = "block";
+            return false;
+        };   
+}
+
+function hideAllDivs() {
+		divContainer = document.getElementById("all");
+		allDivs = divContainer.getElementsByClassName("divTemp");
+        var i;
+        for (i = 0; i < allDivs.length; i++) {
+            allDivs[i].style.display = "none";
+        }
+}
+
+function showFirstPage(){
+		hideAllDivs();
+		divContainer = document.getElementById("all");
+		allDivs = divContainer.getElementsByClassName("divTemp");
+		current = allDivs[0];
+        current.style.display = "block";
+}
+
+function createLinks() {
+        var link, textNode, divContainer, linkContainer, i, current;
+        
+        divContainer = document.getElementById("all");
+        linkContainer = document.getElementById("paging");
+        allDivs = divContainer.getElementsByClassName("divTemp");
+    
+        for (i = 0; i < allDivs.length; i++) {
+            current = allDivs[i];
+            link = document.createElement("a");
+            link.innerHTML = "" + (i + 1);
+            link.href = "#";
+            link.onclick = createCallback(current);
+            linkContainer.appendChild(link);
+            textNode = document.createTextNode(" ");
+            linkContainer.appendChild(textNode);
+        }
+        showFirstPage();
 }
