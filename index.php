@@ -244,7 +244,7 @@
                     </td>
                     <td>
                         <div id="help" class="help">
-                            <a class="fancybox" href="#inline1" title="Informações">
+                            <a class="fancybox" href="#inline2" title="Informações Widget">
                                 <img src="img/question.png" width="25" height="25"/>&nbsp;&nbsp;&nbsp;
                             </a>
                         </div>	
@@ -254,6 +254,33 @@
             <div id="inline1" name="inline1" style="width:500px; height:500px; display: none;">
 
             </div>
+			
+			<div id="inline2" name="inline2" style="width:500px; height:500px; display:none;">
+				<table width="480" border="0" cellspacing="3" cellpadding="3">
+					<tr>
+						<td><center><h1 style="color:blue">Info</h1></center></td>
+					</tr>
+					<tr>
+						<td>Para poder incorporar este widget na sua página basta copiar o código abaixo e colocar onde desejar</td>
+					</tr>
+					<tr>
+						<td><b>Incorporação Pequeno:</b> <span style="color:orange">&lsaquo;iframe src="http://phpdev2.dei.isep.ipp.pt/~i111121/ProjArqsi/index.php" width="450px" height="600px" scrolling="yes"&rsaquo;&lsaquo;/iframe&rsaquo;</span></td>
+					</tr>
+					<tr>
+						<td><b>Incorporação Grande:</b> <span style="color:orange">&lsaquo;iframe src="http://phpdev2.dei.isep.ipp.pt/~i111121/ProjArqsi/index.php" width="450px" height="840px" scrolling="yes"&rsaquo;&lsaquo;/iframe&rsaquo;</span></td>
+					</tr>
+					<tr>
+						<td><h3>Autores:</h3>
+							Márcio Martins - Nº 111417
+							<br>Ricardo Brandão - Nº 1111121
+						</td>
+					</tr>
+					<tr>
+						<td><h3>Agradecimentos:</h3>
+							<p>Criadores da <a href="http://fancybox.net/">FancyBox</a></td>
+					</tr>
+				</table>
+			</div>
 
         </div>
 
