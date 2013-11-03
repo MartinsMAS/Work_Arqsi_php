@@ -272,60 +272,63 @@ class Dal {
     }
 
     public function getUrlImgLivro($isbn) {
-        if ($isbn) {
-            $xml = $this->getXmlByIsbn($isbn);
-            $urlImg = $xml->getElementsByTagName("image_url")->item(0)->nodeValue;
-            if ($urlImg) {
-                if ($urlImg == "https://www.goodreads.com/assets/nocover/111x148.png") {
-                    return false;
+        $ini_array = parse_ini_file("../propriedades.ini");
+        $strConfig = $ini_array['api'];
+        if ($strConfig == "goodreads") {
+            if ($isbn) {
+                $xml = $this->getXmlByIsbn($isbn);
+                $urlImg = $xml->getElementsByTagName("image_url")->item(0)->nodeValue;
+                if ($urlImg) {
+                    if ($urlImg == "https://www.goodreads.com/assets/nocover/111x148.png") {
+                        return false;
+                    } else {
+                        return $urlImg;
+                    }
                 } else {
-                    return $urlImg;
+                    return false;
                 }
             } else {
                 return false;
             }
-        } else {
-            return false;
-        }
-
-
-        /*
-          if ($isbn) {
-          $arrJson = $this->getArrayJsonByIsbn($isbn);
-          $linkImg = $arrJson['items'][0]['volumeInfo']['imageLinks']['thumbnail'];
-          if ($linkImg) {
-          return $linkImg;
-          } else {
-          return false;
-          }
-          } else {
-          return false;
-          }
-         * */
-    }
-
-    public function getSinopseLivro($isbn) {
-        if ($isbn) {
-            $xml = $this->getXmlByIsbn($isbn);
-            $urlSin = $xml->getElementsByTagName("description")->item(0)->nodeValue;
-            if ($urlSin) {
-                return $urlSin;
+        } elseif ($strConfig == "google") {
+            if ($isbn) {
+                $arrJson = $this->getArrayJsonByIsbn($isbn);
+                $linkImg = $arrJson['items'][0]['volumeInfo']['imageLinks']['thumbnail'];
+                if ($linkImg) {
+                    return $linkImg;
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
-        } else {
-            return false;
         }
-        /*
-          $arrJson = $this->getArrayJsonByIsbn($isbn);
-          $sinJson = $arrJson['items'][0]['volumeInfo']['description'];
-          if ($sinJson) {
-          return $sinJson;
-          } else {
-          return false;
-          }
-         * 
-         */
+    }
+
+    public function getSinopseLivro($isbn) {
+        $ini_array = parse_ini_file("../propriedades.ini");
+        $strConfig = $ini_array['api'];
+        if ($strConfig == "goodreads") {
+            if ($isbn) {
+                $xml = $this->getXmlByIsbn($isbn);
+                $urlSin = $xml->getElementsByTagName("description")->item(0)->nodeValue;
+                if ($urlSin) {
+                    return $urlSin;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } elseif ($strConfig == "google") {
+            $arrJson = $this->getArrayJsonByIsbn($isbn);
+            $sinJson = $arrJson['items'][0]['volumeInfo']['description'];
+            if ($sinJson) {
+                return $sinJson;
+            } else {
+                return false;
+            }
+        }
     }
 
     private function getArrayJsonByIsbn($isbn) {
