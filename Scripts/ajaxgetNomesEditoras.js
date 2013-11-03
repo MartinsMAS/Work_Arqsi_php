@@ -59,7 +59,7 @@ function valida() {
     var cx_nLivrosEditora = document.getElementById("nLivrosEditora").value;
     var cx_showNResultsPage = document.getElementById("showNResultsPage").value;
 
-    var patt1 = /([1][0-9])|10/;
+    var patt1 = /1|2|3|4|5|6|7|8|9/;
 
     var ok = true;
     var strErro = "Erro de preenchimento nos seguintes campos:\n";

@@ -196,7 +196,7 @@
         <script type="text/javascript" src="Scripts/ajaxgetNLivros.js"></script>
         <script type="text/javascript" src="Scripts/ajaxgetNomesEditoras.js"></script>
         <script type="text/javascript" src="Scripts/ajaxgetLivrosPorCategoria.js"></script>
-        
+        <script type="text/javascript" src="Scripts/generateRDF.js"></script>
         
         <link rel="stylesheet" type="text/css" href="CSS/widget.css" />
 				
@@ -270,6 +270,10 @@
 			</div>
 				
 		</div>
+        
+        <div id="divRDF">
+            
+        </div>
 		
 			
 			
