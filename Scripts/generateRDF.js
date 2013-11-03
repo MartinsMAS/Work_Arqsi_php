@@ -43,5 +43,5 @@ function generateRDFa(book) {
     tagSpan.appendChild(ulTagPublicacao);
     
     divRDF.appendChild(tagSpan);
-    
+        
 }

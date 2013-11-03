@@ -377,7 +377,7 @@ class Dal {
         $this->db_selectDbName();
         $ip = $_SERVER['REMOTE_ADDR'];
         $time = date("H:i:s");
-        $sql = "INSERT INTO registo_pedidos (url, time, ip) VALUES ('$url', '$time', '$ip')";
+        $sql = "INSERT INTO Registo_Pedidos (url, time, ip) VALUES ('$url', '$time', '$ip')";
         mysql_query($sql, $this->conn);
         $this->db_close();
 
