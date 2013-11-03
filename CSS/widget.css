@@ -4,7 +4,7 @@
     background-image:url(sections/top.png);
 }
 
-.resultadoPesquisa{
+.temporario{
     width: 450px;
     height: 120px;
     background-image:url(sections/mid.png);
@@ -207,4 +207,8 @@
 a:link, a:visited, a:active
 {
     text-decoration:none;
+}
+
+.all{
+    display: none;
 }
