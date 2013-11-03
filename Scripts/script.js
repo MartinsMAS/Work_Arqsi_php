@@ -44,7 +44,7 @@ function loadLivrosCategorias() {
 	var y=document.getElementById("comboCategorias").options;
 	
 	divWaiting = document.createElement("div");
-	divWaiting.setAttribute("class","temporario");
+	divWaiting.setAttribute("class","loadingInformation");
 	
 	tableWaiting = document.createElement("table");
 	tableWaiting.setAttribute("width","360");
@@ -93,7 +93,7 @@ function loadLivrosEditoras(){
 	//var y=document.getElementById("comboCategorias").options;
 	
 	divWaiting = document.createElement("div");
-	divWaiting.setAttribute("class","temporario");
+	divWaiting.setAttribute("class","loadingInformation");
 	
 	tableWaiting = document.createElement("table");
 	tableWaiting.setAttribute("width","360");
@@ -740,8 +740,20 @@ function createLinks() {
 		
         allDivs = divContainer.getElementsByClassName("divTemp");
 		
+			tablePages = document.createElement("table");
+			tb = document.createElement("tbody");
+			tr = document.createElement("tr");
+			td1 = document.createElement("td");
+			td2 = document.createElement("td");		
+		
+		img = document.createElement("img");
+		img.setAttribute("src","../img/tabulation.png");
+		linkContainer.appendChild(img);
+		
+		span = document.createElement("span");
+		
 		txtNode = document.createTextNode("Páginas: ");
-        linkContainer.appendChild(txtNode);
+        span.appendChild(txtNode);
     
         for (i = 0; i < allDivs.length; i++) {
             current = allDivs[i];
@@ -749,9 +761,21 @@ function createLinks() {
             link.innerHTML = "" + (i + 1);
             link.href = "#";
             link.onclick = createCallback(current);
-            linkContainer.appendChild(link);
+            span.appendChild(link);
             textNode = document.createTextNode(" ");
-            linkContainer.appendChild(textNode);
+            span.appendChild(textNode);
         }
+		
+			td2.appendChild(span);
+			td1.appendChild(img);
+	
+			tr.appendChild(td1);
+			tr.appendChild(td2);
+	
+			tb.appendChild(tr);
+	
+			tablePages.appendChild(tb);
+		
+		linkContainer.appendChild(tablePages);
         showFirstPage();
 }
