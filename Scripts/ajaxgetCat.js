@@ -45,6 +45,10 @@ function preencheSelectCategorias(text)
     var selectCategoria = document.getElementById("comboCategorias");
     selectCategoria.innerHTML = "";
     var vetCat = text.split(',');
+    nodeoption = document.createElement("option");
+    nodeoption.value = "none";
+    nodeoption.text = "-----";
+    selectCategoria.appendChild(nodeoption);
     for (var i = 0; i < vetCat.length; i++) {
         nodeoption = document.createElement("option");
         /*Atributo*/
