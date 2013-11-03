@@ -59,7 +59,7 @@ function loadLivrosCategorias() {
 	
 	textNode = document.createTextNode("A carregar dados, por favor aguarde.");
 	img = document.createElement("img");
-	img.setAttribute("src","../img/loading.gif");
+	img.setAttribute("src","img/loading.gif");
 	img.setAttribute("width","48");
 	img.setAttribute("height","48");
 	
@@ -108,7 +108,7 @@ function loadLivrosEditoras(){
 	
 	textNode = document.createTextNode("A carregar dados, por favor aguarde.");
 	img = document.createElement("img");
-	img.setAttribute("src","../img/loading.gif");
+	img.setAttribute("src","img/loading.gif");
 	img.setAttribute("width","48");
 	img.setAttribute("height","48");
 	
@@ -747,7 +747,7 @@ function createLinks() {
 			td2 = document.createElement("td");		
 		
 		img = document.createElement("img");
-		img.setAttribute("src","../img/tabulation.png");
+		img.setAttribute("src","img/tabulation.png");
 		linkContainer.appendChild(img);
 		
 		span = document.createElement("span");
