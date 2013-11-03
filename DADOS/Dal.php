@@ -179,6 +179,9 @@ class Dal {
 
         $strFinal = "<editoras>";
         foreach ($this->editoras AS $editora) {
+            if($editora->getMetodo() == "json"){
+                continue;// Ignora editoras que retornam json
+            }
             $nomeEditora = $editora->getNome();
             $strFinal = $strFinal . "<editora name=" . $nomeEditora . ">";
             $link = $editora->getLink() . "?numero=$n";

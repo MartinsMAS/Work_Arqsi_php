@@ -74,104 +74,44 @@ function getDadosNLivros() {
     header("Content-Type: text/xml; charset=iso-8859-1");
     if (isset($_GET['numero'])) {
         $dal = new Dal();
-        $editoras = $dal->getEditoras();
-
-        $xmlDoc = new DOMDocument();
-
-        $tagRoot = $xmlDoc->createElement("editoras");
-        $xmlDoc->appendChild($tagRoot);
 
         $arrLinksImg = array();
+        $htmlRequest = new DOMDocument();
+        $strRequest = $dal->getDadosNLivros($_GET['numero']);
+        $htmlRequest->loadHTML($strRequest);
+        $strFromHtml = $htmlRequest->saveXML();
+        $xmlResult = new DOMDocument();
+        $xmlResult->loadXML($strFromHtml);
 
-        foreach ($editoras AS $editora) {
-
-            $tagEditora = $xmlDoc->createElement("editora");
-            $tagEditora->setAttribute("name", $editora->getNome());
-            $tagRoot->appendChild($tagEditora);
-
-            $htmlRequest = new DOMDocument();
-            $strRequest = $dal->getDadosNLivros($_GET['numero']);
-            $htmlRequest->loadHTML($strRequest);
-            $strFromHtml = $htmlRequest->saveXML();
-            $xmlResult = new DOMDocument();
-            $xmlResult->loadXML($strFromHtml, LIBXML_NOWARNING);
-
-            $nosLivros = $xmlResult->getElementsByTagName("book");
-            foreach ($nosLivros AS $livro) {
-                // criar a nova tag book e inserir dentro da editora
-                $newTagBook = $xmlDoc->createElement("book");
-                $tagEditora->appendChild($newTagBook);
-
-                $childsBook = $livro->childNodes;
-                $isbn;
-                foreach ($childsBook AS $child) {
-                    $tagName = $child->nodeName;
-                    switch ($tagName) {
-                        case 'title':
-                            $node = $xmlDoc->createElement("title");
-                            $nodeText = $xmlDoc->createTextNode($child->nodeValue);
-                            $node->appendChild($nodeText);
-                            $newTagBook->appendChild($node);
-                            break;
-                        case 'author':
-                            $node = $xmlDoc->createElement("author");
-                            $nodeText = $xmlDoc->createTextNode($child->nodeValue);
-                            $node->appendChild($nodeText);
-                            $newTagBook->appendChild($node);
-                            break;
-                        case 'category':
-                            $node = $xmlDoc->createElement("category");
-                            $nodeText = $xmlDoc->createTextNode($child->nodeValue);
-                            $node->appendChild($nodeText);
-                            $newTagBook->appendChild($node);
-                            break;
-                        case 'isbn':
-                            $node = $xmlDoc->createElement("isbn");
-                            $nodeText = $xmlDoc->createTextNode($child->nodeValue);
-                            $node->appendChild($nodeText);
-                            $newTagBook->appendChild($node);
-                            $isbn = $child->nodeValue; // A usar no request da imagem e sinopse
-                            break;
-                        case 'publicacao':
-                            $node = $xmlDoc->createElement("publicacao");
-                            $nodeText = $xmlDoc->createTextNode($child->nodeValue);
-                            $node->appendChild($nodeText);
-                            $newTagBook->appendChild($node);
-                            break;
-                        case 'news':
-                            $node = $xmlDoc->createElement("news");
-                            $nodeText = $xmlDoc->createTextNode($child->nodeValue);
-                            $node->appendChild($nodeText);
-                            $newTagBook->appendChild($node);
-                            break;
-                    }
+        $nosLivros = $xmlResult->getElementsByTagName("book");
+        foreach ($nosLivros AS $livro) {
+            $isbn = $livro->childNodes->item(3)->nodeValue;
+            // Acrescentar link para imagem
+            $test = $arrLinksImg[$isbn];
+            if ($test != null) {
+                $linkImg = $arrLinksImg[$isbn];
+                if ($linkImg != "Imagem indisponivel") {
+                    $tagLinkImg = $xmlResult->createElement("cover");
+                    $tagTxtNodeLinkImg = $xmlResult->createTextNode($linkImg);
+                    $tagLinkImg->appendChild($tagTxtNodeLinkImg);
+                    $livro->appendChild($tagLinkImg);
                 }
-                // Acrescentar link para imagem
-                $test = $arrLinksImg[$isbn];
-                if ($test != null) {
-                    $linkImg = $arrLinksImg[$isbn];
-                    if ($linkImg) {
-                        $tagLinkImg = $xmlDoc->createElement("cover");
-                        $tagTxtNodeLinkImg = $xmlDoc->createTextNode($linkImg);
-                        $tagLinkImg->appendChild($tagTxtNodeLinkImg);
-                        $newTagBook->appendChild($tagLinkImg);
-                    }
+            } else {
+                $linkImg = $dal->getUrlImgLivro($isbn);
+                if ($linkImg) {
+                    $tagLinkImg = $xmlResult->createElement("cover");
+                    $tagTxtNodeLinkImg = $xmlResult->createTextNode($linkImg);
+                    $tagLinkImg->appendChild($tagTxtNodeLinkImg);
+                    $livro->appendChild($tagLinkImg);
+                    $arrLinksImg[$isbn] = $linkImg;
                 } else {
-                    $linkImg = $dal->getUrlImgLivro($isbn);
-                    if ($linkImg) {
-                        $tagLinkImg = $xmlDoc->createElement("cover");
-                        $tagTxtNodeLinkImg = $xmlDoc->createTextNode($linkImg);
-                        $tagLinkImg->appendChild($tagTxtNodeLinkImg);
-                        $newTagBook->appendChild($tagLinkImg);
-                        $arrLinksImg[$isbn] = $linkImg;
-                    }else{
-                        $arrLinksImg[$isbn] = "Imagem indisponivel";
-                    }
+                    $arrLinksImg[$isbn] = "Imagem indisponivel";
                 }
             }
         }
+
         $dal->insereRegistoPedido($_SERVER['REQUEST_URI']);
-        echo $xmlDoc->saveXML();
+        echo $xmlResult->saveXML();
     } else {
         echo RETURN_DEFAULT;
     }
