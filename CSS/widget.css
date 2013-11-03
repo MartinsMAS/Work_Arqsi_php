@@ -11,6 +11,7 @@
     text-align: center;
 }
 
+
 .divDivisoria{
     width: 450px;
     height: 30px;
@@ -99,8 +100,17 @@
     background-image:url(sections/newSection.png);
 }
 
-.paging{
+.pagingContainer{
+	width: 210px;
+	height: 28px;
+}
 
+.paging{
+	width: 210px;
+	height: 28px;
+	left: 10px;
+	background-image:url(sections/paging2.png);
+	display:none;
 }
 
 
@@ -159,7 +169,7 @@
 }        
 
 .help{
-    width: 450px;
+    width: 235px;
     text-align: right;
     valign: bottom;
 }
