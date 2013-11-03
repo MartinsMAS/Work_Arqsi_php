@@ -89,6 +89,9 @@ class Dal {
                     $linkEditora = $editora->getLink() . "?titulo=$titulo";
                     $txtJson = file_get_contents($linkEditora);
                     $objJson = json_decode($txtJson);
+                    if ($objJson == null) {
+                        continue;
+                    }
 
                     //Criação do xml de retorno
                     $livro = new DOMDocument();
@@ -114,7 +117,7 @@ class Dal {
                     $txtNodeIsbn = $livro->createTextNode($objJson->book[0]->isbn);
                     $tagIsbn->appendChild($txtNodeIsbn);
                     $tagBook->appendChild($tagIsbn);
-                    $isbn = $book[0]->isbn;
+                    $isbn = $objJson->book[0]->isbn;
 
                     $tagPublicacao = $livro->createElement("publicacao");
                     $txtNodePublicacao = $livro->createTextNode($objJson->book[0]->publicacao);
@@ -125,6 +128,24 @@ class Dal {
                     $txtNodeNews = $livro->createTextNode($objJson->book[0]->news);
                     $tagNews->appendChild($txtNodeNews);
                     $tagBook->appendChild($tagNews);
+
+                    // Acrescentar o link da capa do livro ao XML
+                    $linkCover = $this->getUrlImgLivro($isbn);
+                    if ($linkCover) {
+                        $nodeLinkImg = $livro->createElement("cover");
+                        $nodeTxtLinkImg = $livro->createTextNode($linkCover);
+                        $nodeLinkImg->appendChild($nodeTxtLinkImg);
+                        $tagBook->appendChild($nodeLinkImg);
+                    }
+
+                    // Acrescentar a sinopse ao XML
+                    $strSinopse = $this->getSinopseLivro($isbn);
+                    if ($strSinopse) {
+                        $nodeSinopse = $livro->createElement("sinopse");
+                        $nodeTxtSinopse = $livro->createTextNode($strSinopse);
+                        $nodeSinopse->appendChild($nodeTxtSinopse);
+                        $tagBook->appendChild($nodeSinopse);
+                    }
 
                     $livro->appendChild($tagBook);
                     return $livro->saveXML();
@@ -139,11 +160,13 @@ class Dal {
                     $html = file_get_contents($linkEditora);
                     $livro->loadHTML($html);
 
-                    $dal = new Dal();
+                    if ($livro->textContent == "vazio") {
+                        continue;
+                    }
 
-
+                    $isbn = $livro->getElementsByTagName("isbn")->item(0)->textContent;
                     // Acrescentar o link da capa do livro ao XML
-                    $linkCover = $dal->getUrlImgLivro($isbn);
+                    $linkCover = $this->getUrlImgLivro($isbn);
                     if ($linkCover) {
                         $nodeBook = $livro->getElementsByTagName("book")->item(0);
                         $nodeLinkImg = $livro->createElement("cover");
@@ -153,7 +176,7 @@ class Dal {
                     }
 
                     // Acrescentar a sinopse ao XML
-                    $strSinopse = $dal->getSinopseLivro($isbn);
+                    $strSinopse = $this->getSinopseLivro($isbn);
                     if ($strSinopse) {
                         $nodeBook = $livro->getElementsByTagName("book")->item(0);
                         $nodeSinopse = $livro->createElement("sinopse");
@@ -179,8 +202,8 @@ class Dal {
 
         $strFinal = "<editoras>";
         foreach ($this->editoras AS $editora) {
-            if($editora->getMetodo() == "json"){
-                continue;// Ignora editoras que retornam json
+            if ($editora->getMetodo() == "json") {
+                continue; // Ignora editoras que retornam json
             }
             $nomeEditora = $editora->getNome();
             $strFinal = $strFinal . "<editora name=" . $nomeEditora . ">";
@@ -250,33 +273,73 @@ class Dal {
 
     public function getUrlImgLivro($isbn) {
         if ($isbn) {
-            $arrJson = $this->getArrayJsonByIsbn($isbn);
-            $linkImg = $arrJson['items'][0]['volumeInfo']['imageLinks']['smallThumbnail'];
-            if ($linkImg) {
-                return $linkImg;
+            $xml = $this->getXmlByIsbn($isbn);
+            $urlImg = $xml->getElementsByTagName("image_url")->item(0)->nodeValue;
+            if ($urlImg) {
+                if ($urlImg == "https://www.goodreads.com/assets/nocover/111x148.png") {
+                    return false;
+                } else {
+                    return $urlImg;
+                }
             } else {
                 return false;
             }
         } else {
             return false;
         }
+
+
+        /*
+          if ($isbn) {
+          $arrJson = $this->getArrayJsonByIsbn($isbn);
+          $linkImg = $arrJson['items'][0]['volumeInfo']['imageLinks']['thumbnail'];
+          if ($linkImg) {
+          return $linkImg;
+          } else {
+          return false;
+          }
+          } else {
+          return false;
+          }
+         * */
     }
 
     public function getSinopseLivro($isbn) {
-        $arrJson = $this->getArrayJsonByIsbn($isbn);
-        $sinJson = $arrJson['items'][0]['volumeInfo']['description'];
-        if ($sinJson) {
-            return $sinJson;
+        if ($isbn) {
+            $xml = $this->getXmlByIsbn($isbn);
+            $urlSin = $xml->getElementsByTagName("description")->item(0)->nodeValue;
+            if ($urlSin) {
+                return $urlSin;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
+        /*
+          $arrJson = $this->getArrayJsonByIsbn($isbn);
+          $sinJson = $arrJson['items'][0]['volumeInfo']['description'];
+          if ($sinJson) {
+          return $sinJson;
+          } else {
+          return false;
+          }
+         * 
+         */
     }
 
     private function getArrayJsonByIsbn($isbn) {
-        $link = "https://www.googleapis.com/books/v1/volumes?q=isbn:" . $isbn .  "&key=AIzaSyATOCr1deBCf9xY_2JDp7U1UXb_l1X4LSA";
+        $link = "https://www.googleapis.com/books/v1/volumes?q=isbn:" . $isbn . "&key=AIzaSyATOCr1deBCf9xY_2JDp7U1UXb_l1X4LSA";
         $txtJson = file_get_contents($link);
         $arrJson = json_decode($txtJson, true);
         return $arrJson;
+    }
+
+    private function getXmlByIsbn($isbn) {
+        $link = "https://www.goodreads.com/book/isbn?format=xml&isbn=$isbn&key=edLS2N88gxC1P90Q8dUACw";
+        $xml = new DOMDocument();
+        $xml->load($link);
+        return $xml;
     }
 
     /* BASE DE DADOS PHPDEV2 */

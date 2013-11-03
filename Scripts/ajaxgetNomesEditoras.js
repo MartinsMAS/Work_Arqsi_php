@@ -55,6 +55,36 @@ function preencheSelectNomesEditoras(text)
     }
 }
 
+function valida() {
+    var cx_nLivrosEditora = document.getElementById("nLivrosEditora").value;
+    var cx_showNResultsPage = document.getElementById("showNResultsPage").value;
+
+    var patt1 = /([1][0-9])|10/;
+
+    var ok = true;
+    var strErro = "Erro de preenchimento nos seguintes campos:\n";
+    
+    if (!patt1.test(cx_nLivrosEditora)) {
+        strErro += "Resultados por editora.\n";
+        ok = false;
+    }
+
+    if (!patt1.test(cx_showNResultsPage)) {
+        strErro += "Resultados por página.\n";
+        ok = false;
+    }
+    if (ok == false) {
+        strErro += "Por favor, insira um valor entre 1 - 19";
+        alert(strErro);
+        return false;
+    }else{
+        return true;
+    }
+
+
+
+
+}
 
 
 

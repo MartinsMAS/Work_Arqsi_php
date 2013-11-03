@@ -5,12 +5,12 @@ function CreateXmlHttpRequestObject( )
 
     if (window.XMLHttpRequest)
     {
-        xmlHttpObj = new XMLHttpRequest()
+        xmlHttpObj = new XMLHttpRequest();
 
     }
     else if (window.ActiveXObject)
     {
-        xmlHttpObj = new ActiveXObject("Microsoft.XMLHTTP")
+        xmlHttpObj = new ActiveXObject("Microsoft.XMLHTTP");
     }
     return xmlHttpObj;
 }
@@ -39,6 +39,8 @@ function stateHandlerSinopse()
         //CHAMADA À FUNÇÃO QUE PREENCHE SINOPSE
     }
 }
+
+
 
 
 
