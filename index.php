@@ -247,16 +247,24 @@
 		
 		
 		<div id="bottom" class="bottom">
+			<table>
+			<tr>
+			<td>
+			<div class="pagingContainer">
 			<div id="paging" class="paging">
 			
 			</div>
-			
+			</div>
+			</td>
+			<td>
 			<div id="help" class="help">
 				<a class="fancybox" href="#inline1" title="Informações">
 					<img src="img/question.png" width="25" height="25"/>&nbsp;&nbsp;&nbsp;
 				</a>
 			</div>	
-				
+			</td>
+			</tr>
+			</table>
 			<div id="inline1" name="inline1" style="width:500px; height:500px; display: none;">
 				
 			</div>

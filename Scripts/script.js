@@ -17,29 +17,126 @@ function inicializar() {
         createCategorias();
         MakeXMLHTTPCallCategorias();
         //loadLivros();
-    }
+    } else if (selectEscolha.selectedIndex == '0') {
+		elementDiv = document.getElementById("middle");
+		elementDiv.innerHTML="";
+	
+		elementPaging = document.getElementById("paging");
+		elementPaging.style.display = "none";
+		elementPaging.innerHTML="";
+		
+		elementDiv = document.getElementById("secondMenu");
+		elementDiv.innerHTML = "";
+	}
     //MakeXMLHTTPCallNLivros(6);
     //MakeXMLHTTPCallLivrosPorCategoria("Romance");
 }
 
 function loadLivrosCategorias() {
-elementDiv = document.getElementById("middle");
+	elementDiv = document.getElementById("middle");
     elementDiv.innerHTML="";
+	
+	elementPaging = document.getElementById("paging");
+	elementPaging.style.display = "none";
+    elementPaging.innerHTML="";
+	
 	var x=document.getElementById("comboCategorias").selectedIndex;
 	var y=document.getElementById("comboCategorias").options;
+	
+	divWaiting = document.createElement("div");
+	divWaiting.setAttribute("class","temporario");
+	
+	tableWaiting = document.createElement("table");
+	tableWaiting.setAttribute("width","360");
+	tableWaiting.setAttribute("align","center");
+	tb = document.createElement("tbody");
+	tr = document.createElement("tr");
+	td1 = document.createElement("td");
+	td2 = document.createElement("td");
+	
+	td1.setAttribute("width","60");
+	td2.setAttribute("width","300");
+	
+	textNode = document.createTextNode("A carregar dados, por favor aguarde.");
+	img = document.createElement("img");
+	img.setAttribute("src","../img/loading.gif");
+	img.setAttribute("width","48");
+	img.setAttribute("height","48");
+	
+	td2.appendChild(textNode);
+	td1.appendChild(img);
+	
+	tr.appendChild(td1);
+	tr.appendChild(td2);
+	
+	tb.appendChild(tr);
+	
+	tableWaiting.appendChild(tb);
+	divWaiting.appendChild(tableWaiting);
+	
+	elementDiv.appendChild(divWaiting);
+		
 	MakeXMLHTTPCallLivrosPorCategoria(y[x].text);
 }
 
 function loadLivrosEditoras(){
 	elementDiv = document.getElementById("middle");
     elementDiv.innerHTML="";
+	
+	elementPaging = document.getElementById("paging");
+	elementPaging.style.display = "none";
+    elementPaging.innerHTML="";
+	
+	
 	//ALTERAR ESTA MERDA!!
 	//var x=document.getElementById("comboCategorias").selectedIndex;
 	//var y=document.getElementById("comboCategorias").options;
+	
+	divWaiting = document.createElement("div");
+	divWaiting.setAttribute("class","temporario");
+	
+	tableWaiting = document.createElement("table");
+	tableWaiting.setAttribute("width","360");
+	tableWaiting.setAttribute("align","center");
+	tb = document.createElement("tbody");
+	tr = document.createElement("tr");
+	td1 = document.createElement("td");
+	td2 = document.createElement("td");
+	
+	td1.setAttribute("width","60");
+	td2.setAttribute("width","300");
+	
+	textNode = document.createTextNode("A carregar dados, por favor aguarde.");
+	img = document.createElement("img");
+	img.setAttribute("src","../img/loading.gif");
+	img.setAttribute("width","48");
+	img.setAttribute("height","48");
+	
+	td2.appendChild(textNode);
+	td1.appendChild(img);
+	
+	tr.appendChild(td1);
+	tr.appendChild(td2);
+	
+	tb.appendChild(tr);
+	
+	tableWaiting.appendChild(tb);
+	divWaiting.appendChild(tableWaiting);
+	
+	elementDiv.appendChild(divWaiting);
+	
 	MakeXMLHTTPCallNLivros(6);
 }
 
 function createCategorias() {
+
+	elementDiv = document.getElementById("middle");
+    elementDiv.innerHTML="";
+	
+	elementPaging = document.getElementById("paging");
+	elementPaging.style.display = "none";
+    elementPaging.innerHTML="";
+
     elementDiv = document.getElementById("secondMenu");
     elementDiv.innerHTML = "";
 
@@ -119,6 +216,14 @@ function createCategorias() {
 }
 
 function createEditora() {
+	
+	elementDiv = document.getElementById("middle");
+    elementDiv.innerHTML="";
+	
+	elementPaging = document.getElementById("paging");
+	elementPaging.style.display = "none";
+    elementPaging.innerHTML="";
+
     elementDiv = document.getElementById("secondMenu");
     elementDiv.innerHTML = "";
 
@@ -213,12 +318,7 @@ function createTitleDiv(titulo) {
 function creteMiddleSection(xml) {
 	var livros = xml.getElementsByTagName("book");
 	var numPaginas;
-	//if(livros.lenght % 2 == 0){
-	//	numPaginas = livros.length / 3;
-	//}else{
-	//	numPaginas = livros.length / 3 + 1;
-	//}
-	
+		
 	//var divisoes = new Array(numPaginas);
 	
 	var divisoes = new Array();
@@ -251,11 +351,14 @@ function creteMiddleSection(xml) {
 		//temp=editoras.getElementsByTagName("editora")[i];
 		var title = editoras[i].getAttribute("name");
 
+		var books = editoras[i].getElementsByTagName("book");
+		
+		if(books.length!=0){
 		tabelaDivisoria = createTitleDiv(title);
 		divCategoria.appendChild(tabelaDivisoria);
 		divTemp.appendChild(divCategoria);
+		}
 		
-		var books = editoras[i].getElementsByTagName("book");
 		
 		for (j = 0; j < books.length; j++) {
 			if(paging==flag){
@@ -633,7 +736,12 @@ function createLinks() {
         
         divContainer = document.getElementById("all");
         linkContainer = document.getElementById("paging");
+		linkContainer.style.display = "block";
+		
         allDivs = divContainer.getElementsByClassName("divTemp");
+		
+		txtNode = document.createTextNode("Páginas: ");
+        linkContainer.appendChild(txtNode);
     
         for (i = 0; i < allDivs.length; i++) {
             current = allDivs[i];
