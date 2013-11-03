@@ -9,8 +9,8 @@ class Dal {
     // Acesso à base de dados
     private $servername = 'localhost';
     private $dbname = 'i111417';
-    private $username = 'root';
-    private $pass = '';
+    private $username = 'i111417';
+    private $pass = '218300';
     private $conn;
 
     public function __construct() {
@@ -206,7 +206,7 @@ class Dal {
                 continue; // Ignora editoras que retornam json
             }
             $nomeEditora = $editora->getNome();
-            $strFinal = $strFinal . "<editora name=" . $nomeEditora . ">";
+            $strFinal = $strFinal . "<editora name=\"" . $nomeEditora . "\">";
             $link = $editora->getLink() . "?numero=$n";
             $load = file_get_contents($link);
             $strFinal = $strFinal . $load;
