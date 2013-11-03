@@ -23,12 +23,16 @@ function inicializar() {
 }
 
 function loadLivrosCategorias() {
+elementDiv = document.getElementById("middle");
+    elementDiv.innerHTML="";
 	var x=document.getElementById("comboCategorias").selectedIndex;
 	var y=document.getElementById("comboCategorias").options;
 	MakeXMLHTTPCallLivrosPorCategoria(y[x].text);
 }
 
 function loadLivrosEditoras(){
+	elementDiv = document.getElementById("middle");
+    elementDiv.innerHTML="";
 	//ALTERAR ESTA MERDA!!
 	//var x=document.getElementById("comboCategorias").selectedIndex;
 	//var y=document.getElementById("comboCategorias").options;
